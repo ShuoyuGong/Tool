@@ -6,6 +6,19 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>***EMS查询***</title>
     <link rel="stylesheet" href="../dist/css/bootstrap.css">
+    <style>
+        .expressLocation{
+            white-space:nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .expressLocation:hover { 
+            text-overflow: inherit;
+            /* overflow: visible; */
+            white-space:pre-wrap;
+        }
+    </style>
 </head>
 <body>
     <!-- expressLogo -->
@@ -22,22 +35,44 @@
 
     <!-- 查询主体 -->
     <section>
-        <div class="container">
+        <div class="container" style="background-color:rgba(240, 239, 239, 0.397)">
             <div class="row">
-                <div class="input-group input-group-lg" style="background-color: aqua;">
+                <div class="input-group input-group-lg" >
                     <input type="text"  class="form-control col-8" id="InputNum" placeholder="输入单号,在1000+快递公司中为您智能查询">
-                    <input type="text" class="form-control col-4" id="InputPhone" placeholder="顺丰用户请输入收件人手机后四位">
+                    <input type="text" class="form-control col-4" id="InputPhone" placeholder="顺丰用户请输入收件人号手机后四位">
                     <button class="input-group-text " id="inputGroup-sizing-lg">
                         <img src="img/searchLogo.png" style="width:95%;">
                     </button>
                 </div>
             </div>
+
+            <div class="row" id="expressCompanyInfo" style="display: none;">
+                <div class="media mt-3">
+                    <img src="..." class="mr-3 ml-3" id="exorssCompanyLogo">
+                    <div class="media-body align-items-center" >
+                        <h6 style="vertical-align: middle;">公司：</h6>
+                        <h5 id="expressCompany" style="vertical-align: ;"></h5>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row" id="expressInfo" style="display: none;">
+                <!-- 快递时间 -->
+                <div class="col-2">
+                    <ul class="list-group" id="expressTime">
+                        <li class="list-group-item" >时间</li>
+                    </ul>
+                </div>
+                <!-- 快递信息 -->
+                <div class="col-10">
+                    <ul class="list-group" id="expressLocation">
+                        <li class="list-group-item">地点和跟踪进度</li>
+                    </ul>
+                </div>
+            </div>
         </div>
-
-        <p id="p1">adsfads</p>
     </section>
-
-
+        
 
     <script src="../dist/js/jquery-3.3.1.js"></script>
     <script src="../dist/js/popper.js"></script>
@@ -53,15 +88,60 @@
                         // 设置的是请求参数
                         data: {'Num':Num},
                         success: function (res) {
-                            var a = $.parseJSON(res);
-                            console.log(a);
-                            $("p1").text(a);
+                            // 截取从“{”开始直至结束
+                            var str = res.substring(res.indexOf('{'));
+                            // 去除字符串中多余空格
+                            str = str.replace(/\s*/g,"");
+                            // 将字符串转化为对象
+                            const strToObj = JSON.parse(str);
+                            // 将字符串转化为数组
+                            var arr = []
+                            for (let i in strToObj) {
+                                let o = {};
+                                o[i] = strToObj[i];
+                                arr.push(o)
+                            }
+                            // showapi_res_code键位值为0则成功，其他为查询失败
+                            if(arr[2]["showapi_res_code"] !== 0){
+                                alert("查询失败!请检查单号重试!");
+                            }
+                            // 获取快递公司名
+                            var expressCompany = arr[3]["showapi_res_body"]["expTextName"];
+                            // 获取快递公司logo
+                            var exorssCompanyLogoUrl = arr[3]["showapi_res_body"]["logo"];
+                            // 获取快递时效信息
+                            var expressInfo = arr[3]["showapi_res_body"]["data"];
+
+
+                            // ***************打印调试*************
+                            // console.log(expressCompany);
+                            // console.log(exorssCompanyLogoUrl);
+                            // console.log(expressInfo);
+
+                            // 快递信息显示
+                            $("#expressCompanyInfo").fadeIn(1500);
+                            $("#expressInfo").fadeIn(2000);
+                            // 添加快递公司logo src属性
+                            $("#exorssCompanyLogo").attr("src",exorssCompanyLogoUrl);
+                            // 添加公司名称text属性
+                            $("#expressCompany").text(expressCompany);
+                            // 清除之前查询的时效与进度
+                            $(".expressTime").remove();
+                            $(".expressLocation").remove();
+                            // 遍历添加时效与地点跟踪元素
+                            for (let index = 0; index < expressInfo.length; index++) {
+                                var expressTime = expressInfo[index]["time"];
+                                var expressLocation = expressInfo[index]["context"];
+                                $("#expressTime").append("<li class='list-group-item list-group-item-light expressTime'>"+expressTime+"</li>");
+                                $("#expressLocation").append("<li class='list-group-item list-group-item-light expressLocation'>"+expressLocation+"</li>");
+                            }
                         }
                     })
                 }else{
                     alert("请输入纯数字查询!");
-                    }
-                })
+                }
+        })
     </script>
 </body>
 </html>
+

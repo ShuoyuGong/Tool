@@ -26,4 +26,6 @@ if (1 == strpos("$".$host, "https://"))
 // echo(curl_exec($curl));
 // echo json_decode($Num);
 // 75312047417878
-echo json_encode(curl_exec($curl));
+echo curl_exec($curl);
+
+
