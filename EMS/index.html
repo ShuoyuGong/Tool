@@ -5,8 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>***EMS查询***</title>
+    <link rel="stylesheet" href="../dist/css/bootstrap.css">
 </head>
 <body>
-    
+    <!-- expressLogo -->
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center" style="vertical-align: middle;">
+                    <img src="img/expressLogo.png" style="width: 5%; vertical-align:inherit;">
+                    <p class="d-inline-block text-info ml-2" style="vertical-align:inherit;font-size: 3rem;">快递查询</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 查询主体 -->
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="input-group input-group-lg" style="background-color: aqua;">
+                    <input type="text"  class="form-control col-8" id="InputNum" placeholder="输入单号,在1000+快递公司中为您智能查询">
+                    <input type="text" class="form-control col-4" id="InputPhone" placeholder="顺丰用户请输入收件人手机后四位">
+                    <button class="input-group-text " id="inputGroup-sizing-lg">
+                        <img src="img/searchLogo.png" style="width:95%;">
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <p id="p1">adsfads</p>
+    </section>
+
+
+
+    <script src="../dist/js/jquery-3.3.1.js"></script>
+    <script src="../dist/js/popper.js"></script>
+    <script src="../dist/js/bootstrap.js"></script>
+    <script>
+        $("#inputGroup-sizing-lg").click(function(){
+            var Num = $("#InputNum").val();
+            var InputPhone = $("#InputPhone").val();
+                if(!isNaN(Num && InputPhone)){
+                    $.ajax({
+                        url: 'ems.php',
+                        type: 'get',
+                        // 设置的是请求参数
+                        data: {'Num':Num},
+                        success: function (res) {
+                            var a = $.parseJSON(res);
+                            console.log(a);
+                            $("p1").text(a);
+                        }
+                    })
+                }else{
+                    alert("请输入纯数字查询!");
+                    }
+                })
+    </script>
 </body>
 </html>
