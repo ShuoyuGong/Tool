@@ -88,12 +88,16 @@
                         // 设置的是请求参数
                         data: {'Num':Num},
                         success: function (res) {
+                            // console.log(res);
                             // 截取从“{”开始直至结束
                             var str = res.substring(res.indexOf('{'));
+                            // console.log(str);
                             // 去除字符串中多余空格
                             str = str.replace(/\s*/g,"");
+                            // console.log(str);
                             // 将字符串转化为对象
                             const strToObj = JSON.parse(str);
+                            // console.log(strToObj);
                             // 将字符串转化为数组
                             var arr = []
                             for (let i in strToObj) {
@@ -101,6 +105,7 @@
                                 o[i] = strToObj[i];
                                 arr.push(o)
                             }
+                            console.log(arr);
                             // showapi_res_code键位值为0则成功，其他为查询失败
                             if(arr[2]["showapi_res_code"] !== 0){
                                 alert("查询失败!请检查单号重试!");
@@ -114,9 +119,9 @@
 
 
                             // ***************打印调试*************
-                            // console.log(expressCompany);
-                            // console.log(exorssCompanyLogoUrl);
-                            // console.log(expressInfo);
+                            console.log(expressCompany);
+                            console.log(exorssCompanyLogoUrl);
+                            console.log(expressInfo);
 
                             // 快递信息显示
                             $("#expressCompanyInfo").fadeIn(1500);
