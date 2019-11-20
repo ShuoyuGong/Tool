@@ -9,7 +9,7 @@
     <title>根据地区获得气象信息</title>
     <link rel="stylesheet" href="../dist/css/bootstrap.css">
 </head>
-<body>
+<body style="background-color:rgba(236, 230, 230, 0.548);">
     <header>
         <!-- 顶部logo展示 -->
         <div class="container">
@@ -27,7 +27,7 @@
             <div class="row">
                 <div class="col-6 text-right">
                     <select class="dropdown col-lg-5 col-md-7 mt-2"  style="vertical-align: middle;"id = "weatherForecastDay">
-                        <option class=" source_Language dropdown-item  col-lg-2 col-sm-6 d-inline-block " value="15">未来15天预报</option>
+                        <option class=" source_Language dropdown-item  col-lg-2 col-sm-6 d-inline-block " value="15">未来14天预报</option>
                         <option class=" source_Language dropdown-item  col-lg-2 col-sm-6 d-inline-block " value="7">最近一星期预报</option>
                         <option class=" source_Language dropdown-item  col-lg-2 col-sm-6 d-inline-block " value="24">24小时预报</option>
                     </select>
@@ -45,202 +45,470 @@
     </section>
 
     <!-- Echarts jumbotron-fluid-->
-    <section>
-        <div class="" id="main"></div>
+    <section id="Echarts_Info">
+        <!-- 折线图表信息 -->
+        <div class="col-8 ml-5 " id="main" style="height: 50%;display: inline-block;"></div>
+        <!-- 查询地区基本信息 -->
+            <div class="col-3 mr-3" style="height: 53%;display: inline-block;float: right;">
+                <!-- 地区名*日夜间气温值 -->
+                <div class="col-11 text-center" style="margin-left: 15px;">
+                    <div class="row" style="overflow: hidden;">
+                        <div class="col-6 text-center">
+                            <span id="cityName" class="text-muted" style="font-size: 2.5rem;"></span>
+                            <br>
+                            <span id="weekDay" class="text-muted"></span>
+                            <span id="monthDay" class="text-muted ml-1"></span>
+                            <br>
+                            <span id="weatherConditions" class="text-muted"></span>
+                            <br>
+                            <img src="http://app1.showapi.com/weather/icon/day/02.png" id="weatherLogo" class="img-fluid col-4">
+                            <span class="text-muted ml-1" style="font-size: 0.75rem;">风力值：</span>
+                            <span id="windPower"  style="font-size: 1.5rem;"></span>
+                        </div>
+                        <div class=" container col-6 text-center">
+                            <div class="row col-10 text-center mt-3 ml-3">
+                                <span style="font-size: 1rem;vertical-align: buttom;" class="text-muted">日间气温：</span>
+                                <span id="dayTime_temperature" style="font-size: 3rem;"></span>
+                                <span id="daytime_temperature" style="vertical-align:top;" >℃</span>
+                            </div>
+                            <div class="row text-center mt-1 ml-3">
+                                    <span style="font-size: 1rem;vertical-align: buttom;" class="text-muted">夜间气温：</span>
+                                    <span id="nightTime_temperature" style="font-size: 3rem;"></span>
+                            <span id="daytime_temperature" style="vertical-align:top;" >℃</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 未来几天的天气图标显示 -->
+                <div class="col-12">
+                    <p id="dayNum" class="text-center" style="font-size:1.5rem;"></p>
+                </div>
+            </div>   
+        </div>
+        <!-- 创建按钮*******实现Echarts与天气信息的收放 -->
+            <!-- <button type="button" class="btn btn-primary  col-12" id="animateBtn">点击收缩天气信息(查看地图)</button> -->
     </section>
+
     <!-- 地图展示 -->
     <div id="allmap" class="col-12"></div>	
+
+
+
+
+    <script src="../dist/js/jquery-3.3.1.js"></script>
+    <script src="../dist/js/popper.js"></script>
+    <script src="../dist/js/bootstrap.js"></script>
+    <script src="../dist/js/echarts.js"></script>
+    
+    <script type="text/javascript">
+        // 获得echarts
+            var main = document.getElementById("main");
+            myecharts = echarts.init(main, 'light');
+            // 定义全局用于存储地点名字
+            // localStorage['place'] = "6446";
+            var place;
+            // 百度地图API功能开始*********************************
+            var map = new BMap.Map("allmap");
+            var point = new BMap.Point(116.331398,39.897445);
+            map.centerAndZoom(point,12);
+            map.centerAndZoom(point, 14);
+            map.enableScrollWheelZoom();
+            map.enableInertialDragging();
+            map.enableContinuousZoom();
+            function myFun(result){
+                var cityName = result.name;
+                map.setCenter(cityName);
+                place = cityName;
+                // alert("当前定位城市:"+cityName);
+                // console.log(place);
+            }
+            var size = new BMap.Size(10, 20);
+            map.addControl(new BMap.CityListControl({
+                anchor: BMAP_ANCHOR_TOP_LEFT,
+                offset: size,
+                onChangeSuccess: function (e) {
+                    // localStorage["place"] = e["title"];
+                    place = e["title"];
+
+                }
+            }));
+            var myCity = new BMap.LocalCity();
+            myCity.get(myFun);
+            // alert(place);
+    
+    
+        // 查询按钮点击事件开始********************************
+        $("#weatherSearchBtn").click(function(){
+            // 获取查询天数
+            // console.log(city);
+            // console.log(localStorage.getItem("place"));
+            var weatherForecastDay = $("#weatherForecastDay").val();
+            // console.log(weatherForecastDay);
+            $.ajax({
+                url: 'index.php',
+                type: 'get',
+                data: {"weatherForecastDay":weatherForecastDay,
+                        "place":place},
+                success: function (res) {
+                    // console.log(res);
+                    // 截取从“{”开始直至结束
+                    var str = res.substring(res.indexOf('{'));
+                    // 去除字符串中多余空格
+                    str = str.replace(/\s*/g,"");
+                    // console.log(str);
+                    // 将字符串转化为对象
+                    const strToObj = JSON.parse(str);
+                    // 将字符串转化为数组
+                    var arr = []
+                        for (let i in strToObj) {
+                            let o = {};
+                            o[i] = strToObj[i];
+                             arr.push(o)
+                        }
+                    // showapi_res_code键位值为0则成功，其他为查询失败
+                    if(arr[2]["showapi_res_code"] !== 0){
+                        alert("查询失败...请重试...");
+                    }else{
+                        // 根据用户查询天数做出相应操作
+                        if(weatherForecastDay == 15){
+                            // 赋值查询地点
+                            var location = arr[3]["showapi_res_body"]["area"];
+                            // 赋值当前星期几
+                            var weekDay = '星期'+'日一二三四五六'.charAt(new Date().getDay());
+                            // 将[dayList]中的数据取出来
+                            var dayList = arr[3]["showapi_res_body"]["dayList"];
+                            // console.log(dayList);
+                            //***********今日天气数据赋值开始*****************************************
+                                var echartsText = "未来14日天气预报";
+                                // 赋值今日天气情况
+                                var todayWeather = dayList[0]["day_weather"];
+                                // 赋值今日天气logo
+                                var todayWeatherLogo = dayList[0]["day_weather_pic"];
+                                // 赋值今日白天气温值
+                                var todayDayTemperature = dayList[0]["day_air_temperature"];
+                                // 赋值今日夜晚气温值
+                                var todayNightTemperature = dayList[0]["night_air_temperature"];
+                                // 赋值今日风力值
+                                var todayWindPower = dayList[0]["day_wind_power"];
+                            // ***********今日天气数据赋值结束***********************
+    
+                            // 15天的数据赋值开始*****************************************************
+                            var Half_A_Month_Day_Temperature = new Array();
+                            var Half_A_Month_Night_Temperature = new Array();
+                            var Half_A_Month_Logo = new Array();
+                            var Half_A_Month_Weather = new Array();
+                            var date = new Array();
+                            var dateMonthDay = new Array();
+                            for (var i = 0; i < dayList.length; i++) {
+                                // 赋值半个月的气温最高值
+                                Half_A_Month_Day_Temperature[i] = dayList[i]["day_air_temperature"];
+                                // 赋值半个月的气温最低值
+                                Half_A_Month_Night_Temperature[i] = dayList[i]["night_air_temperature"];
+                                // 赋值半个月的天气logo地址
+                                Half_A_Month_Logo[i] = dayList[i]["day_weather_pic"];
+                                // 获得15天的日期拼接“/”
+                                date[i] = dayList[i]["daytime"].substring(4,6) + "/"+dayList[i]["daytime"].substring(6);
+                                // 获得15天的日期拼接“月”“日”
+                                dateMonthDay[i] = dayList[i]["daytime"].substring(4,6) + "月"+dayList[i]["daytime"].substring(6) + "日";
+                            }
+                            // 15天的数据赋值结束************************************
+                            // console.log(Half_A_Month_Day_Temperature);
+                            // console.log(Half_A_Month_Night_Temperature);
+                            // console.log(date);
+                            // console.log(Half_A_Month_Logo);
+                            // myecharts.showLoading();
+                            // 开始DOM节点赋值****************************************************************
+                            $("#dayNum").text(echartsText);           
+                            // 地区名字
+                            $("#cityName").text(location);
+                            // 星期几
+                            $("#weekDay").text(weekDay);
+                            // 今日天气情况
+                            $("#weatherConditions").text(todayWeather);
+                            // 今日天气情况logo地址
+                            $("#weatherLogo").attr("src",todayWeatherLogo);
+                            // 今日日间气温
+                            $("#dayTime_temperature").text(todayDayTemperature);
+                            // 今日夜间气温
+                            $("#nightTime_temperature").text(todayNightTemperature);
+                            // 今日风力值
+                            $("#windPower").text(todayWindPower);
+                            // 删除原本上一个查询的信息的所有节点
+                            $(".dayLogo").remove();
+                            $(".MD").remove();
+                            // 添加天气logo节点
+                            for (var k = dateMonthDay.length -1; k >= 0; k--) {
+                                $("#dayNum").after('<div class = "col-2 mr-2" style = "display:inline-block;"><img class = "col-12 img-fluid dayLogo" id = "dayLogo" style = "display:inline-block;"></div>');
+                                $("#dayLogo").attr("src",Half_A_Month_Logo[k]);
+                                $("#dayLogo").after('<sapn class = "col-2 text-center text-muted ml-3 MD" id = "MD" style = "font-size:0.7rem;"></sapn>');
+                                $("#MD").text(dateMonthDay[k]);
+                            }
+                        // DOM节点赋值结束****************************************************************
+                        }else if(weatherForecastDay == 7){
+                            // 赋值查询地点
+                            var location = arr[3]["showapi_res_body"]["cityInfo"]["c3"];
+                            // 赋值当前星期几
+                            var weekDay = '星期'+'日一二三四五六'.charAt(new Date().getDay());
+                            // 将[dayList]中的数据取出来
+                            var dayList = new Array();
+                            dayList[0] = arr[3]["showapi_res_body"]["f1"];
+                            dayList[1] = arr[3]["showapi_res_body"]["f2"];
+                            dayList[2] = arr[3]["showapi_res_body"]["f3"];
+                            dayList[3] = arr[3]["showapi_res_body"]["f4"];
+                            dayList[4] = arr[3]["showapi_res_body"]["f5"];
+                            dayList[5] = arr[3]["showapi_res_body"]["f6"];
+                            dayList[6] = arr[3]["showapi_res_body"]["f7"];
+                            // console.log(dayList);
+                            //***********今日天气数据赋值开始*****************************************
+                                var echartsText = "未来7日天气预报";
+                                // 赋值今日天气情况
+                                var todayWeather = dayList[0]["day_weather"];
+                                // 赋值今日天气logo
+                                var todayWeatherLogo = dayList[0]["day_weather_pic"];
+                                // 赋值今日白天气温值
+                                var todayDayTemperature = dayList[0]["day_air_temperature"];
+                                // 赋值今日夜晚气温值
+                                var todayNightTemperature = dayList[0]["night_air_temperature"];
+                                // 赋值今日风力值
+                                var todayWindPower =dayList[0]["day_wind_power"].substring(0,4);
+                            // ***********今日天气数据赋值结束***************************************
+    
+                            // 7天的数据赋值开始*****************************************************
+                            var Half_A_Month_Day_Temperature = new Array();
+                            var Half_A_Month_Night_Temperature = new Array();
+                            var Half_A_Month_Logo = new Array();
+                            var Half_A_Month_Weather = new Array();
+                            var date = new Array();
+                            var dateMonthDay = new Array();
+                            for (var i = 0; i < dayList.length; i++) {
+                                // 赋值半个月的气温最高值
+                                Half_A_Month_Day_Temperature[i] = dayList[i]["day_air_temperature"];
+                                // 赋值半个月的气温最低值
+                                Half_A_Month_Night_Temperature[i] = dayList[i]["night_air_temperature"];
+                                // 赋值半个月的天气logo地址
+                                Half_A_Month_Logo[i] = dayList[i]["day_weather_pic"];
+                                // 赋值半个月的的天气情况
+                                // Half_A_Month_Weather[i] = dayList[i]["day_weather"];
+                                // 获得15天的日期拼接“/”
+                                date[i] = dayList[i]["day"].substring(4,6) + "/"+dayList[i]["day"].substring(6);
+                                // 获得15天的日期拼接“月”“日”
+                                dateMonthDay[i] = dayList[i]["day"].substring(4,6) + "月"+dayList[i]["day"].substring(6) + "日";
+                            }
+                            // 7天的数据赋值结束************************************
+    
+                            // 开始DOM节点赋值****************************************************************
+                                $("#dayNum").text(echartsText);           
+                                // 地区名字
+                                $("#cityName").text(location);
+                                // 星期几
+                                $("#weekDay").text(weekDay);
+                                // 今日天气情况
+                                $("#weatherConditions").text(todayWeather);
+                                // 今日天气情况logo地址
+                                $("#weatherLogo").attr("src",todayWeatherLogo);
+                                // 今日日间气温
+                                $("#dayTime_temperature").text(todayDayTemperature);
+                                // 今日夜间气温
+                                $("#nightTime_temperature").text(todayNightTemperature);
+                                // 今日风力值
+                                $("#windPower").text(todayWindPower);
+                                // 删除原本上一个查询的信息的所有节点
+                                $(".dayLogo").remove();
+                                $(".MD").remove();
+                                // 添加天气logo节点
+                                for (var k = dateMonthDay.length -1; k >= 0; k--) {
+                                    $("#dayNum").after('<div class = "col-2 offset-1 mt-2" style = "display:inline-block;"><img class = "col-12 img-fluid dayLogo" id = "dayLogo" style = "display:inline-block;"></div>');
+                                    $("#dayLogo").attr("src",Half_A_Month_Logo[k]);
+                                    $("#dayLogo").after('<sapn class = "col-2 offset-1 text-center text-muted ml-3 MD mt-2" id = "MD" style = "font-size:0.7rem;"></sapn>');
+                                    $("#MD").text(dateMonthDay[k]);
+                                }
+                            // DOM节点赋值结束*****24小时的数据赋值开始************24小时的数据赋值开始*************24小时的数据赋值开始**********************************
+                        }else if(weatherForecastDay == 24){
+                            // console.log(arr);
+                            // 赋值查询地点
+                            var location = arr[3]["showapi_res_body"]["area"];
+                            // 赋值当前星期几
+                            var weekDay = '星期'+'日一二三四五六'.charAt(new Date().getDay());
+                            // 将[dayList]中的数据取出来
+                            var dayList = arr[3]["showapi_res_body"]["hourList"];
+                            // console.log(dayList);
+                            //***********今日天气数据赋值开始*****************************************
+                                var echartsText = "未来24小时天气预报";
+                                // 赋值今日天气情况
+                                var todayWeather = dayList[0]["weather"];
+                                // 赋值今日天气logo
+                                var todayWeatherLogo =  "http://app1.showapi.com/weather/icon/day/"+dayList[0]['weather_code']+".png";
+                                // 赋值今日白天气温值
+                                var todayDayTemperature = dayList[22]["temperature"];    
+                                // // 赋值今日夜晚气温值
+                                var todayNightTemperature = dayList[9]["temperature"];
+                                // // 赋值今日风力值
+                                var todayWindPower =dayList[22]["wind_power"].substring(0,4);
+                            // ***********今日天气数据赋值结束***************************************
+    
+                            // 24小时的数据赋值开始*******24小时的数据赋值开始*************24小时的数据赋值开始*********************************
+                            var Half_A_Month_Day_Temperature = new Array();
+                            var Half_A_Month_Night_Temperature = new Array();
+                            var Half_A_Month_Logo = new Array();
+                            var Half_A_Month_Weather = new Array();
+                            var date = new Array();
+                            var dateMonthDay = new Array();
+                            for (var i = 0; i < dayList.length; i++) {
+                                // 赋值半个月的气温最高值
+                                Half_A_Month_Day_Temperature[i] = dayList[i]["temperature"];
+                                // 赋值半个月的气温最低值
+                                Half_A_Month_Night_Temperature[i] = dayList[i]["night_air_temperature"];
+                                // 赋值半个月的天气logo地址
+                                Half_A_Month_Logo[i] = "http://app1.showapi.com/weather/icon/day/"+dayList[i]['weather_code']+".png";
+                                // 获得15天的日期拼接“/”
+                                date[i] = dayList[i]["time"].substring(8,10) + ":"+dayList[i]["time"].substring(10,12);
+                                // 获得15天的日期拼接“月”“日”
+                                dateMonthDay[i] = dayList[i]["time"].substring(8,10) + "时"+dayList[i]["time"].substring(10,12) + "分";
+                            }
+                            // console.log(dateMonthDay);
+                            // 24小时的数据赋值结束************************************
+                            // 开始DOM节点赋值****************************************************************
+                                $("#dayNum").text(echartsText);           
+                                // 地区名字
+                                $("#cityName").text(location);
+                                // 星期几
+                                $("#weekDay").text(weekDay);
+                                // 今日天气情况
+                                $("#weatherConditions").text(todayWeather);
+                                // 今日天气情况logo地址
+                                $("#weatherLogo").attr("src",todayWeatherLogo);
+                                // 今日日间气温
+                                $("#dayTime_temperature").text(todayDayTemperature);
+                                // 今日夜间气温
+                                $("#nightTime_temperature").text(todayNightTemperature);
+                                // 今日风力值
+                                $("#windPower").text(todayWindPower);
+                                // 删除原本上一个查询的信息的所有节点
+                                $(".dayLogo").remove();
+                                $(".MD").remove();
+                                // 添加天气logo节点
+                                for (var k = dateMonthDay.length -1; k >= 0; k--) {
+                                    $("#dayNum").after('<div class = "col-1 ml-3 mr-3 mt-2" style = "display:inline-block;"><img class = "col-12 img-fluid dayLogo" id = "dayLogo" style = "display:inline-block;"></div>');
+                                    $("#dayLogo").attr("src",Half_A_Month_Logo[k]);
+                                    $("#dayLogo").after('<sapn class = "col-1 text-center text-muted ml-2 MD" id = "MD" style = "font-size:0.7rem;"></sapn>');
+                                    $("#MD").text(date[k]);
+                                }
+                        // DOM节点赋值结束****************************************************************
+                        }
+    
+                        // 获取当前是月份
+                        var monthDay = new Date();
+                        var nowMonth = monthDay.getMonth() + 1;
+                        // 获取当前是几号
+                        var strDate = monthDay.getDate();
+                        // console.log(nowMonth+"月"+strDate+"日");
+                        $("#monthDay").text(nowMonth+"月"+strDate+"日");
+    
+                        // echarts数据赋值开始***************************************************
+                            option = {
+                                    title: {
+                                            text: place+echartsText,
+                                            // subtext: '纯属虚构'
+                                    },
+                                    tooltip: {
+                                        trigger: 'axis'
+                                    },
+                                    legend: {
+                                        data:['日间气温','夜间气温']
+                                    },
+                                    toolbox: {
+                                        show: true,
+                                        feature: {
+                                            dataZoom: {
+                                                yAxisIndex: 'none'
+                                            },
+                                            dataView: {readOnly: false},
+                                            magicType: {type: ['line', 'bar']},
+                                            restore: {},
+                                            saveAsImage: {}
+                                        }
+                                    },
+                                    xAxis:  [{
+                                        type: 'category',
+                                        boundaryGap: false,
+                                        data: date
+                                    },
+                                    ],
+                                    yAxis: {
+                                        type: 'value',
+                                        axisLabel: {
+                                            formatter: '{value} °C'
+                                        }
+                                    },
+                                    series: [
+                                        {
+                                            name:'日间气温',
+                                            type:'line',
+                                            data:Half_A_Month_Day_Temperature,
+                                            markPoint: {
+                                                data: [
+                                                    {type: 'max', name: '最大值'},
+                                                    {type: 'min', name: '最小值'}
+                                                ]
+                                            },
+                                            markLine: {
+                                                data: [
+                                                    {type: 'average', name: '平均值'}
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            name:'夜间气温',
+                                            type:'line',
+                                            data:Half_A_Month_Night_Temperature,
+                                            markPoint: {
+                                                data: [
+                                                    {name: '周最低', value: -2, xAxis: 1, yAxis: -1.5}
+                                                ]
+                                            },
+                                            markLine: {
+                                                data: [
+                                                    {type: 'average', name: '平均值'},
+                                                    [{
+                                                        symbol: 'none',
+                                                        x: '90%',
+                                                        yAxis: 'max'
+                                                    }, {
+                                                        symbol: 'circle',
+                                                        label: {
+                                                            normal: {
+                                                                position: 'start',
+                                                                formatter: '最大值'
+                                                            }
+                                                        },
+                                                        type: 'max',
+                                                        name: '最高点'
+                                                    }]
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                };
+                            myecharts.setOption(option);  
+                        // echarts数据赋值结束****************************************************************
+                    }
+                    
+                } 
+            });
+        })
+        // 查询按钮点击事件结束********************************
+
+       
+        setTimeout(function(){
+            $("#weatherSearchBtn").click();
+        },1000);
+        // $("#weatherSearchBtn").click();
+        // $("#weatherSearchBtn").click();
+    </script>
+
+
+
 </body>
 </html>
-<script src="../dist/js/jquery-3.3.1.js"></script>
-<script src="../dist/js/popper.js"></script>
-<script src="../dist/js/bootstrap.js"></script>
-<script src="../dist/js/echarts.js"></script>
-<script type="text/javascript">
-    // 获得echarts
-    var main = document.getElementById("main");
-    var myecharts = echarts.init(main, 'light');
-    // 定义全局用于存储地点名字
-    var place;
-	// 百度地图API功能开始*********************************
-	var map = new BMap.Map("allmap");
-	var point = new BMap.Point(116.331398,39.897445);
-	map.centerAndZoom(point,12);
-    map.centerAndZoom(point, 14);
-    map.enableScrollWheelZoom();
-    map.enableInertialDragging();
-    map.enableContinuousZoom();
-	function myFun(result){
-		var cityName = result.name;
-        map.setCenter(cityName);
-        place = cityName;
-		// alert("当前定位城市:"+cityName);
-    }
-    var size = new BMap.Size(10, 20);
-    map.addControl(new BMap.CityListControl({
-        anchor: BMAP_ANCHOR_TOP_LEFT,
-        offset: size,
-        onChangeSuccess: function (e) {
-            place = e["title"];
-        }
-    }));
-    var myCity = new BMap.LocalCity();
-    myCity.get(myFun);
-    // 百度地图API功能结束********************************
 
-    // 查询按钮点击事件开始********************************
-    $("#weatherSearchBtn").click(function(){
-        // 获取查询天数
-        var weatherForecastDay = $("#weatherForecastDay").val();
-        // console.log(weatherForecastDay);
-        $.ajax({
-            url: 'index.php',
-            type: 'get',
-            data: {"weatherForecastDay":weatherForecastDay,
-                    "place":place},
-            success: function (res) {
-                // 截取从“{”开始直至结束
-                var str = res.substring(res.indexOf('{'));
-                // 去除字符串中多余空格
-                str = str.replace(/\s*/g,"");
-                // console.log(str);
-                // 将字符串转化为对象
-                const strToObj = JSON.parse(str);
-                // 将字符串转化为数组
-                var arr = []
-                    for (let i in strToObj) {
-                        let o = {};
-                        o[i] = strToObj[i];
-                         arr.push(o)
-                    }
-                // showapi_res_code键位值为0则成功，其他为查询失败
-                if(arr[2]["showapi_res_code"] !== 0){
-                    alert("查询失败...请重试...");
-                }else{
-                    // 根据用户查询天数做出相应操作
-                    if(weatherForecastDay == 15){
-                        // 赋值查询地点
-                        var location = arr[3]["showapi_res_body"]["area"];
-                        // 赋值当前星期几
-                        var weekDay = '星期'+'日一二三四五六'.charAt(new Date().getDay());
 
-                        // 将[dayList]中的数据取出来
-                        var dayList = arr[3]["showapi_res_body"]["dayList"];
-                        //***********今日天气数据赋值开始*****************************************
-                            // 赋值今日天气情况
-                            var todayWeather = dayList[1]["day_weather"];
-                            // 赋值今日天气logo
-                            var todayWeatherLogo = dayList[1]["day_weather_pic"];
-                            // 赋值今日白天气温值
-                            var todayDayTemperature = dayList[1]["day_air_temperature"];
-                            // 赋值今日夜晚气温值
-                            var todayNightTemperature = dayList[1]["night_air_temperature"];
-                            // 赋值今日风力值
-                            var todayWindPower = dayList[1]["day_wind_power"];
-                        // ***********今日天气数据赋值结束***********************
-
-                        // 15天的数据赋值开始*****************************************************
-                        for (var i = 0; i < dayList.length; i++) {
-                            // 赋值半个月的气温值
-                            var Half_A_Month_Temperature = dayList[i]["day_air_temperature"];
-                            // 赋值半个月的天气logod地址
-                            var Half_A_Month_Logo = dayList[i]["day_weather_pic"];
-                            // 赋值半个月的的天气情况
-                            var Half_A_Month_Weather = dayList[i]["day_weather"];
-                        }
-                        // 15天的数据赋值结束************************************
-                       
-                        // myecharts.showLoading();
-                        option = {
-                            title: {
-                                text: '未来一周气温变化',
-                                subtext: '纯属虚构'
-                            },
-                            tooltip: {
-                            trigger: 'axis'
-                        },
-                        legend: {
-                            data:['最高气温','最低气温']
-                        },
-                        toolbox: {
-                            show: true,
-                            feature: {
-                                dataZoom: {
-                                    yAxisIndex: 'none'
-                                },
-                                dataView: {readOnly: false},
-                                magicType: {type: ['line', 'bar']},
-                                restore: {},
-                                saveAsImage: {}
-                            }
-                        },
-                        xAxis:  {
-                            type: 'category',
-                            boundaryGap: false,
-                            data: ['周一','周二','周三','周四','周五','周六','周日']
-                        },
-                        yAxis: {
-                            type: 'value',
-                            axisLabel: {
-                                formatter: '{value} °C'
-                            }
-                        },
-                        series: [
-                            {
-                                name:'最高气温',
-                                type:'line',
-                                data:[11, 11, 15, 13, 12, 13, 10],
-                                markPoint: {
-                                    data: [
-                                        {type: 'max', name: '最大值'},
-                                        {type: 'min', name: '最小值'}
-                                    ]
-                                },
-                                markLine: {
-                                    data: [
-                                        {type: 'average', name: '平均值'}
-                                    ]
-                                }
-                            },
-                            {
-                                name:'最低气温',
-                                type:'line',
-                                data:[1, -2, 2, 5, 3, 2, 0],
-                                markPoint: {
-                                    data: [
-                                        {name: '周最低', value: -2, xAxis: 1, yAxis: -1.5}
-                                    ]
-                                },
-                                markLine: {
-                                    data: [
-                                        {type: 'average', name: '平均值'},
-                                        [{
-                                            symbol: 'none',
-                                            x: '90%',
-                                            yAxis: 'max'
-                                        }, {
-                                            symbol: 'circle',
-                                            label: {
-                                                normal: {
-                                                    position: 'start',
-                                                    formatter: '最大值'
-                                                }
-                                            },
-                                            type: 'max',
-                                            name: '最高点'
-                                        }]
-                                    ]
-                                }
-                            }
-                        ]
-                    };
-                        myecharts.setOption(option);  
-                        // console.log(todayWindPower);
-                    }
-                }
-                
-            } 
-        });
-    })
-    // 查询按钮点击事件结束********************************
-</script>

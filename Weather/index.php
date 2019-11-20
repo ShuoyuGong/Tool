@@ -3,7 +3,6 @@
     $weatherForecastDay = $_GET["weatherForecastDay"];
     // 接收查询地区名字
     $place = $_GET["place"];
-
 /*判断用户想要查询天数，做出相应查询******************************************IF
 ************************15为未来15天预报
 ***********************7为最近一星期预报
@@ -19,7 +18,6 @@
         $querys = "area=$place";
         $bodys = "";
         $url = $host . $path . "?" . $querys;
-
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
         curl_setopt($curl, CURLOPT_URL, $url);
@@ -74,4 +72,5 @@
         }
         echo(curl_exec($curl));
     }
+
 ?>
