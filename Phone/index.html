@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>手机号归属地查询</title>
+	<link rel="stylesheet" type="text/css" href="../dist/css/bootstrap.css"/>
+	<style type="text/css">
+		/* .input-phone{
+			width: 50%;
+		} */
+	</style>
+</head>
+<body>
+	<!-- PhoneLogo -->
+    <header>
+		<div class="container">
+			<div class="row">
+				<div class="col-12 text-center" style="vertical-align: middle;">
+					<img src="img/PhoneNum.png" style="width: 5%; vertical-align:inherit;">
+					<p class="d-inline-block text-info ml-2" style="vertical-align:inherit;font-size: 3rem;">号码归属地查询</p>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<div class="container" style="background-color:rgba(240, 239, 239, 0.397)">
+        <div class="row">
+			<div class="input-group ">
+				<input type="text" id="inputNum" class="form-control col-10" placeholder="请输入正确手机号" aria-label="Recipient's username" aria-describedby="button-addon2">
+				<div class="input-group-append col-2">
+					<button class="btn btn-outline-primary col-12" type="button" id="SearchBtn">查询</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="row" id="phoneInfo" style="display: none;">
+				<div class="col-2 text-center">
+					<ul class="list-group" >
+						<li class="list-group-item" >手机号码为:</li>
+						<li class="list-group-item" >归属地为:</li>
+						<li class="list-group-item" >运营商为:</li>
+						<li class="list-group-item" >区域编码为:</li>
+						<li class="list-group-item" >邮政编码为:</li>
+						<li class="list-group-item" >经纬度为:</li>
+					</ul>
+				</div>
+				<div class="col-10">
+					<ul class="list-group">
+						<li class="list-group-item text-success" id="phoneNum"></li>
+						<li class="list-group-item text-success" id="areaCity"></li>
+						<li class="list-group-item text-success" id="types"></li>
+						<li class="list-group-item text-success" id="area_code"></li>
+						<li class="list-group-item text-success" id="zip_code"></li>
+						<li class="list-group-item text-success" id="lnglat"></li>
+					</ul>
+				</div>
+			</div>
+	</div>
+	
+
+
+	<script src="../dist/js/jquery-3.3.1.js"></script>
+    <script src="../dist/js/popper.js"></script>
+    <script src="../dist/js/bootstrap.js"></script>
+	<script type="text/javascript">
+		$("#SearchBtn").click(function(){
+			// alert("11");
+			var inputNum = $("#inputNum").val();
+			if(inputNum !== ""){	
+				$.ajax({
+					url: 'index.php',
+					type: 'get',
+					// 设置的是请求参数
+					data: {'inputNum':inputNum},
+					success:function(res){
+						if(res == "不是手机号"){
+							alert(res);
+						}else{
+                            // 截取从“{”开始直至结束
+							var str = res.substring(res.indexOf('{'));
+                            // console.log(str);
+                            // 去除字符串中多余空格
+                            str = str.replace(/\s*/g,"");
+                            // console.log(str);
+                            // 将字符串转化为对象
+                            const strToObj = JSON.parse(str);
+                            // console.log(strToObj);
+                            // 将字符串转化为数组
+                            var arr = []
+                            for (let i in strToObj) {
+                                let o = {};
+                                o[i] = strToObj[i];
+                                arr.push(o)
+                            }
+                            var msg = arr[2]["msg"];
+							if(msg == "success"){
+								// 开始变量赋值***********************************
+								// 区域编码赋值
+								var area_code = arr[0]["data"]["area_code"];
+								// 邮政编码赋值
+								var zip_code = arr[0]["data"]["zip_code"];
+								// 运营商赋值
+								var types = arr[0]["data"]["types"];
+								// 省份赋值
+								var prov = arr[0]["data"]["prov"];
+								// 城市赋值
+								var city = arr[0]["data"]["city"];
+								// 经度赋值
+								var lng = arr[0]["data"]["lng"];
+								// 纬度赋值
+								var lat = arr[0]["data"]["lat"];
+
+								// 开始DOM赋值****************************************
+								// 手机号赋值
+								$("#phoneNum").text(inputNum);
+								// 归属地赋值
+								$("#areaCity").text(prov+"省"+city+"市");
+								// 运营商赋值
+								$("#types").text(types);
+								// 区域编码赋值
+								$("#area_code").text(area_code);
+								// 邮政编码赋值
+								$("#zip_code").text(zip_code);
+								// 经纬度赋值
+								$("#lnglat").text(lng+" ; "+lat);
+								$("#phoneInfo").fadeIn("slow");
+							}else{
+								alert("查询错误，请检查手机号格式重试...");
+							}
+						}
+					}
+				})
+			}else{
+				alert("请输入手机号！")
+			}
+			
+		})
+	</script>
+
+</body>
+</html>

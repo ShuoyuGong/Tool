@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>IP地址查询</title>
+		<link rel="stylesheet" type="text/css" href="../dist/css/bootstrap.css"/>
+	</head>
+	<body>
+		<!-- IPLogo -->
+		<header>
+			<div class="container">
+				<div class="row">
+					<div class="col-12 text-center" style="vertical-align: middle;">
+						<img src="img/IPLogo.png" style="width: 5%; vertical-align:inherit;">
+						<p class="d-inline-block text-info ml-2" style="vertical-align:inherit;font-size: 3rem;">IP地址查询</p>
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<!-- IP查询 -->
+		<div class="container" style="background-color:rgba(240, 239, 239, 0.397)">
+			<div class="row">
+				<div class="input-group ">
+					<input type="text" id="inputIP" class="form-control col-10" placeholder="请输入正确IP地址,如 255.255.255.255" aria-label="Recipient's username" aria-describedby="button-addon2">
+					<div class="input-group-append col-2">
+						<button class="btn btn-outline-primary col-12" type="button" id="SearchBtn">查询</button>
+					</div>
+				</div>
+			</div>
+			<!-- 查询到的信息展示 -->
+			<div class="row" id="IpInfo" style="display: none;">
+				<div class="col-2 text-center">
+					<ul class="list-group" >
+						<li class="list-group-item" >IP地址为:</li>
+						<li class="list-group-item" >归属地为:</li>
+						<li class="list-group-item" >运营商为:</li>
+					</ul>
+				</div>
+				<div class="col-10">
+					<ul class="list-group">
+						<li class="list-group-item text-success" id="ipAdress"></li>
+						<li class="list-group-item text-success" id="ipArea"></li>
+						<li class="list-group-item text-success" id="isp"></li>
+					</ul>
+				</div>
+			</div>
+		</div>		
+		
+		<script src="../dist/js/jquery-3.3.1.js" type="text/javascript" charset="UTF-8"></script>
+		<script type="text/javascript">
+				$("#SearchBtn").click(function(){
+					var inputIP = $("#inputIP").val();
+						$.ajax({	
+							type:"get",
+							url:"index.php",
+							data:{'inputIP':inputIP},
+							success:function(res){
+								// console.log(res)
+								//截取字符串
+								var str = res.substring(res.indexOf('{'));
+								
+								//去除多余空格
+								str = str.replace(/\s*/g,"");
+								
+								//转化为对象
+								const strToObj = JSON.parse(str);
+								
+								//对象转化为数组
+								var arr = []
+                            	for (let i in strToObj) {
+                                let o = {};
+                                o[i] = strToObj[i];
+                                arr.push(o);
+								}
+								console.log(arr)
+								var area = arr[1]["ret"];                     
+								if(area == 40001){
+									alert("IP地址不能为空");
+								}else if(area == 40002){
+									alert("IP地址格式错误");
+								}else if(area == 40003){
+									alert("IP为内网IP地址");
+								}else if(area == 40004){
+									alert("IP地址信息不存在");
+								}else if(area==200){
+									// 变量赋值开始***************************
+									// ip地址赋值
+									var ipAdress = inputIP;
+									$("#inputIP").text(inputIP);
+									// ip归属地赋值
+									var ipArea=arr[0]["data"]["country"] + arr[0]["data"]["region"] + arr[0]["data"]["city"] +"市";
+									$("#ipArea").text(ipArea);
+									// 运营商
+									var isp =arr[0]["data"]["isp"];
+									$("#isp").text(isp);
+
+									// DOM赋值操作开始****************************
+									// ip地址赋值
+									$("#ipAdress").text(inputIP);
+									// ip归属地赋值
+									$("#ipArea").text(ipArea);
+									// 运营商
+									$("#isp").text(isp);
+
+									// ip信息框渐入
+									$("#IpInfo").fadeIn("slow");
+								}
+							}
+							
+							
+						});
+				})
+		</script>
+	</body>
+</html>

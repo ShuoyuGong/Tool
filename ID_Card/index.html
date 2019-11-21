@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>身份证信息查询</title>
+	<link rel="stylesheet" type="text/css" href="../dist/css/bootstrap.css"/>
+</head>
+<body>
+	<!-- ID_CradLogo -->
+	<header>
+		<div class="container">
+			<div class="row">
+				<div class="col-12 text-center" style="vertical-align: middle;">
+					<img src="img/Id_CardLogo.png" style="width: 5%; vertical-align:inherit;">
+					<p class="d-inline-block text-info ml-2" style="vertical-align:inherit;font-size: 3rem;">身份证信息查询</p>
+				</div>
+			</div>
+		</div>
+	</header>
+
+
+	<!-- IP查询 -->
+	<div class="container" style="background-color:rgba(240, 239, 239, 0.397)">
+		<div class="row">
+			<div class="input-group ">
+				<input type="text" id="inputIDCard" class="form-control col-10" placeholder="请输入身份证前6位或18位完整身份证号码" aria-label="Recipient's username" aria-describedby="button-addon2">
+				<div class="input-group-append col-2">
+					<button class="btn btn-outline-primary col-12" type="button" id="SearchBtn">查询</button>
+				</div>
+			</div>
+		</div>
+		<!-- 查询到的信息展示 -->
+		<div class="row" id="IpInfo" style="display:none ;">
+			<div class="col-2 text-center">
+				<ul class="list-group " >
+					<li class="list-group-item" >您的身份证号:</li>
+					<li class="list-group-item" >签发机关:</li>
+					<li class="list-group-item" >性别:</li>
+					<li class="list-group-item" >出生年月:</li>
+				</ul>
+			</div>
+			<div class="col-10">
+				<ul class="list-group">
+					<li class="list-group-item text-success" id="IDCardNum"></li>
+					<li class="list-group-item text-success" id="IDCardArea"></li>
+					<li class="list-group-item text-success" id="IDCardSex"></li>
+					<li class="list-group-item text-success" id="IDCardBirth"></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+
+
+<script src="../dist/js/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+	$("#SearchBtn").click(function(){
+		var inputIDCard=$("#inputIDCard").val();
+		var inputIDCardLength = inputIDCard.length;
+		$.ajax({
+			url:'index.php',
+			type:'post',
+			data:{"inputIDCard":inputIDCard},
+			success:function(res){
+				//截取从"{"开始直至结束
+				var str=res.substring(res.indexOf('{'));
+				//console.log(str);
+				//去除字符串中多余空格
+				str =str.replace(/\s*/g,"");
+				//console.log(str);
+				//将字符串转化为对象
+				const strToObj=JSON.parse(str);
+				//console.log(strToObj);
+				//将字符串转化为数组
+				var arr=[];
+				for(let i in strToObj){
+					let o={};
+					o[i]=strToObj[i];
+					arr.push(o)
+				}
+				// 返回状态赋值
+				var status = arr[1]["msg"];
+				if(status == "ok"){
+					if(inputIDCardLength == 6){
+						// 变量赋值开始********************************
+							// 用户输入的身份证号
+							var IDCardNum = inputIDCard;
+							// 签发机关
+							var IDCardArea=arr[2]["result"]["area"];
+						// DOM赋值开始*********************************
+							// 用户输入的身份证号
+							$("#IDCardNum").text(IDCardNum);
+							// 签发机关
+							$("#IDCardArea").text(IDCardArea);
+							// 性别
+							$("#IDCardSex").text("请输入完整身份证号码方可查询");
+							// 出生年月
+							$("#IDCardBirth").text("请输入完整身份证号码方可查询");
+					}else if(inputIDCardLength == 18){
+						// 变量赋值开始********************************
+							// 省份赋值
+							var province = arr[2]["result"]["province"];
+							// 市区赋值
+							var city = arr[2]["result"]["city"];
+							// 县区赋值
+							var town = arr[2]["result"]["town"];
+							// 性别赋值
+							var sex = arr[2]["result"]["sex"];
+							// 出生年月日赋值
+							var birth = arr[2]["result"]["birth"];
+						// DOM赋值开始*********************************
+							// 用户输入的身份证号
+							$("#IDCardNum").text(inputIDCard);
+							// 签发机关
+							$("#IDCardArea").text(province+city+town);
+							// 性别
+							$("#IDCardSex").text(sex);
+							// 出生年月
+							$("#IDCardBirth").text(birth);
+					}
+					// 身份信息展示
+					$("#IpInfo").fadeIn("slow");
+				}else{
+					alert("输入信息有误，请检查重新输入！")
+				}
+			}
+		})
+	})
+</script>
+</body>
+</html>
