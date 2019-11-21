@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>货币转换</title>
+	<link rel="stylesheet" type="text/css" href="../dist/css/bootstrap.css">
+</head>
+<body>
+	<!-- 货币Logo -->
+	<header>
+		<div class="container">
+			<div class="row">
+				<div class="col-12 text-center" style="vertical-align: middle;">
+					<img src="img/currencyLogo.png" style="width: 5%; vertical-align:inherit;">
+					<p class="d-inline-block text-info ml-2 mt-2" style="vertical-align:inherit;font-size: 3rem;">货币转换</p>
+				</div>
+			</div>
+		</div>
+	</header>
+	<section>
+		<div class="container text-center" style="background-color: rgba(113, 187, 236, 0.301);">
+			<div class="row">
+				<div class="col-12 mt-3">
+					<!--源货币列表-->
+					<select class="dropdown col-lg-3 col-md-4 col-sm-3" style="vertical-align: middle;" id = "sourceMoney">
+						<option value="CNY" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">人民币</option>
+						<option value="IDR" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">印尼卢比</option>
+						<option value="NZD" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">新西兰元</option>
+						<option value="THB" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">泰国铢</option>
+						<option value="SEK" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">瑞典克朗</option>
+						<option value="JPY" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">日元</option>
+						<option value="CHF" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">瑞士法郎</option>
+						<option value="RUB" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">卢布</option>
+						<option value="PHP" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">菲律宾比索</option>
+						<option value="HKD" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">港币</option>
+						<option value="MYR" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">林吉特</option>
+						<option value="EUR" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">欧元</option>
+						<option value="INR" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">印度卢比</option>
+						<option value="DKK" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">丹麦克朗</option>
+						<option value="CAD" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">加拿大元</option>
+						<option value="NOK" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">挪威克朗</option>
+						<option value="AED" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">阿联酋迪拉姆</option>
+						<option value="SAR" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">沙特里亚尔</option>
+						<option value="BRL" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">巴西里亚尔</option>
+						<option value="MOP" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">澳门元</option>
+						<option value="ZAR" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">南非亚特</option>
+						<option value="TRY" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">土耳其里拉</option>
+						<option value="USD" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">美元</option>
+						<option value="KRW" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">韩国元</option>
+						<option value="TWD" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">新台币</option>
+						<option value="AUD" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">澳大利亚元</option>
+						<option value="GBP" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">英镑</option>
+					</select>
+					<!--翻译转换logo-->
+					<img src="img/currencyConversion.png" style="width:3%;vertical-align: middle;" class="ml-5 mr-5">
+					<!--目标语言列表-->
+					<select class="dropdown col-lg-3 col-md-4 col-sm-3" style="vertical-align: middle;" id="targetMoney">
+						<option value="CNY" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">人民币</option>
+						<option value="IDR" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">印尼卢比</option>
+						<option value="NZD" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">新西兰元</option>
+						<option value="THB" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">泰国铢</option>
+						<option value="SEK" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">瑞典克朗</option>
+						<option value="JPY" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">日元</option>
+						<option value="CHF" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">瑞士法郎</option>
+						<option value="RUB" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">卢布</option>
+						<option value="PHP" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">菲律宾比索</option>
+						<option value="HKD" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">港币</option>
+						<option value="MYR" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">林吉特</option>
+						<option value="EUR" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">欧元</option>
+						<option value="INR" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">印度卢比</option>
+						<option value="DKK" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">丹麦克朗</option>
+						<option value="CAD" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">加拿大元</option>
+						<option value="NOK" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">挪威克朗</option>
+						<option value="AED" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">阿联酋迪拉姆</option>
+						<option value="SAR" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">沙特里亚尔</option>
+						<option value="BRL" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">巴西里亚尔</option>
+						<option value="MOP" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">澳门元</option>
+						<option value="ZAR" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">南非亚特</option>
+						<option value="TRY" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">土耳其里拉</option>
+						<option value="USD" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">美元</option>
+						<option value="KRW" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">韩国元</option>
+						<option value="TWD" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">新台币</option>
+						<option value="AUD" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">澳大利亚元</option>
+						<option value="GBP" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">英镑</option>
+					</select>
+					<!--转换按钮-->
+					<button type="button" class="btn-primary ml-5 col-2"  id="MoneyBtn">转换</button>
+				</div>
+			</div>
+			<div class="row mt-3 text-center">
+				<!-- 源语言文本 -->
+				<div class="text-center col-6">
+					<input id="originalText" class="col-12 border-dark mb-3 rounded" style="height: 50px; width:95%;padding: 0.7rem; "></input>
+				</div>
+				<!-- 目标语言文本 -->
+				<div class="text-center col-6">
+					<input id="targetText" readonly class="col-12 border-success mb-3 rounded" style="height: 50px; width:95%;padding: 0.7rem; background-color: rgba(250, 247, 247, 0.514);"></input>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<script src="../dist/js/jquery-3.3.1.js" type="text/javascript" charset="UTF-8"></script>
+	<script src="../distjs/popper.js"></script>
+    <script src="../distjs/bootstrap.js"></script>
+	<script type="text/javascript">
+		$("#MoneyBtn").click(function(){
+			// 获取原货币类型
+			var sourceMoney =  $("#sourceMoney").val();
+			var targetMoney =  $("#targetMoney").val();
+			var originalText = $("#originalText").val();
+			var a = $("#sourceMoney").text();
+			console.log(a);
+			if (originalText !== "") {
+				$.ajax({
+					url:'index.php',
+					type:'post',
+					data:{"sourceMoney":sourceMoney,"targetMoney":targetMoney,"originalText":originalText},
+					success:function(res){
+						console.log(res);
+						//截取从"{"开始直至结束
+						var str=res.substring(res.indexOf('{'));
+						//console.log(str);
+						//去除字符串中多余空格
+						str =str.replace(/\s*/g,"");
+						//console.log(str);
+						//将字符串转化为对象
+						const strToObj=JSON.parse(str);
+						//console.log(strToObj);
+						//将字符串转化为数组
+						var arr=[];
+						for(let i in strToObj){
+							let o={};
+							o[i]=strToObj[i];
+							arr.push(o)
+						}
+						console.log(arr);
+
+						var targetMoney=arr[3]["showapi_res_body"]["money"];
+						//console.log(targetMoney);
+						$("#targetText").val(targetMoney);
+					}
+				})
+			}else{
+				alert("源语言文本框不能为空");
+			}
+		})
+	</script>
+</body>
+</html>

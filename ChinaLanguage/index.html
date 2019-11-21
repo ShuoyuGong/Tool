@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>普通话证书查询</title>
+	<link rel="stylesheet" href="../dist/css/bootstrap.css">
+</head>
+<body>
+	<!--logo -->
+	<header>
+		<div class="container">
+			<div class="row">
+				<div class="col-12 text-center" style="vertical-align: middle;">
+					<img src="img/ChinaLanguageLogo.png" style="width: 5%; vertical-align:inherit;">
+					<p class="d-inline-block text-info ml-2" style="vertical-align:inherit;font-size: 3rem;">普通话证书信息查询</p>
+				</div>
+			</div>
+		</div>
+	</header>
+	
+	<section>
+		<div class="container">
+			<div class="row ">
+				<!-- 姓名 -->
+				<div class="input-group mb-3 col-6 offset-3 ">
+					<input type="text" id="username" class="form-control" placeholder="请输入您的姓名" aria-label="请输入您的姓名" aria-describedby="button-addon2">
+					
+				</div>
+				<!-- 身份证信息 -->
+				<div class="input-group mb-3 col-6 offset-3 ">
+					<input type="text" id="Id_num" class="form-control" placeholder="请输入您的身份证号码" aria-label="请输入您的身份证号码" aria-describedby="button-addon2">
+				</div>
+				<!-- 证书编号 -->
+				<div class="input-group mb-3 col-6 offset-3 ">
+					<input type="text" id="certificate" class="form-control" placeholder="请输入您的证书编号" aria-label="请输入您的证书编号" aria-describedby="button-addon2">
+				</div>
+			</div>
+			<!-- 查询按钮 -->
+			<div class="row">
+				<button class="btn btn-outline-primary col-6 offset-3" type="button" id="searchBtn">查询</button>
+			</div>
+
+			<!-- 查询到的信息展示 -->
+			<div class="row mt-3" id="LanguageInfo" style="display: none;">
+				<div class="col-2 text-center offset-1">
+					<ul class="list-group " >
+						<li class="list-group-item" >姓名:</li>
+						<li class="list-group-item" >性别:</li>
+						<li class="list-group-item" >分数:</li>
+						<li class="list-group-item" >等级:</li>
+						<li class="list-group-item" >身份证号:</li>
+						<li class="list-group-item" >准考证号:</li>
+						<li class="list-group-item" >证书编号:</li>
+						<li class="list-group-item" >考试时间:</li>
+						<li class="list-group-item" >测试站点:</li>
+					</ul>
+				</div>
+				<div class="col-8">
+					<ul class="list-group">
+						<li class="list-group-item text-success" id="name"></li>
+						<li class="list-group-item text-success" id="score"></li>
+						<li class="list-group-item text-success" id="level"></li>
+						<li class="list-group-item text-success" id="sex"></li>
+						<li class="list-group-item text-success" id="IDCardNum"></li>
+						<li class="list-group-item text-success" id="ticket"></li>
+						<li class="list-group-item text-success" id="certificateNum"></li>
+						<li class="list-group-item text-success" id="testTime"></li>
+						<li class="list-group-item text-success" id="textArea"></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+		<script src="../dist/js/jquery-3.3.1.js"></script>
+		<script type="text/javascript">
+			$("#searchBtn").click(function(){
+				var username=$("#username").val();
+				var Id_num=$("#Id_num").val();
+				var certificate=$("#certificate").val();
+				// 判断输入信息不能为空
+				if(username !== "" &&　Id_num　!== "" && certificate !== ""){
+					$.ajax({
+						url:'index.php',
+						type:'post',
+						data:{'username':username,'Id_num':Id_num,'certificate':certificate},
+						success:function(res){
+							var str = res.substring(res.indexOf('{'));
+							str = str.replace(/\s*/g,"");
+							const strToObj = JSON.parse(str);
+							var arr = []
+							for (let i in strToObj) {
+								let o = {};
+								o[i] = strToObj[i];
+								arr.push(o)
+							}
+							// 获取数据状态
+							var status = arr[0]["普通话证书查询数据状态"];
+							if(status == "艾科瑞特，让企业业绩长青"){
+								//数据获取成功
+								// 变量赋值开始************************************************
+								var name=arr[1]["普通话证书查询数据实体信息"]["姓名"];
+								var score=arr[1]["普通话证书查询数据实体信息"]["分数"];
+								var level=arr[1]["普通话证书查询数据实体信息"]["等级"];
+								var sex=arr[1]["普通话证书查询数据实体信息"]["性别"];
+								var IDCardNum=arr[1]["普通话证书查询数据实体信息"]["身份证号"];
+								var ticket=arr[1]["普通话证书查询数据实体信息"]["准考证号"];
+								var certificateNum=arr[1]["普通话证书查询数据实体信息"]["证书编号"];
+								var testTime=arr[1]["普通话证书查询数据实体信息"]["考试时间"];
+								var textArea=arr[1]["普通话证书查询数据实体信息"]["测试站"];
+
+								// DOM赋值开始************************************************
+								$("#name").text(name);
+								$("#score").text(score);
+								$("#level").text(level);
+								$("#sex").text(sex);
+								$("#IDCardNum").text(IDCardNum);
+								$("#ticket").text(ticket);
+								$("#certificateNum").text(certificateNum);
+								$("#testTime").text(testTime);
+								$("#textArea").text(textArea);
+
+								// 返回信息展示
+								$("#LanguageInfo").slideDown(2000);
+							}else{
+								alert("输入信息有误！请检查！");
+							}
+						}
+					})
+				}else{
+					alert("姓名、身份证号与证书编号属于必填信息!");
+				}
+			})
+			
+		</script>
+		
+	</body>
+</html>
