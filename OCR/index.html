@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>OCR文字识别</title>
+    <link rel="stylesheet" href="dist/css/bootstrap.css">
+
+    <style>
+        *{
+            list-style: none;
+        }
+        .file:hover {
+            background: #AADFFD;
+            border-color: #78C3F3;
+            color: #004974;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- IPLogo -->
+	<header>
+		<div class="container">
+			<div class="row">
+				<div class="col-12 text-center" style="vertical-align: middle;">
+					<img src="index_imgs/OCRLogo.png" style="width: 5%; vertical-align:inherit;">
+					<p class="d-inline-block text-info ml-2" style="vertical-align:inherit;font-size: 3rem;">OCR文字识别</p>
+				</div>
+			</div>
+		</div>
+    </header>
+    
+
+        <div class="container justify-content-around">
+            <div class="row" data-spy="scroll" data-target="myTab">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active text-dark" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">通用文字识别</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" id="idCard-tab" data-toggle="tab" href="#idCard" role="tab" aria-controls="idCard" aria-selected="false">身份证识别</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" id="bankCard-tab" data-toggle="tab" href="#bankCard" role="tab" aria-controls="bankCard" aria-selected="false">银行卡识别</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" id="businessCard-tab" data-toggle="tab" href="#businessCard" role="tab" aria-controls="businessCard" aria-selected="false">名片识别</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" id="licensePlate-tab" data-toggle="tab" href="#licensePlate" role="tab" aria-controls="licensePlate" aria-selected="false">车牌识别</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" id="businessLicense-tab" data-toggle="tab" href="#businessLicense" role="tab" aria-controls="businessLicense" aria-selected="false">营业执照识别</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="tab-content" id="myTabContent">
+            <!-- 通用文字识别*****通用文字识别***************通用文字识别**************** -->
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="container">
+                    <div class="row " style="background-color: rgba(245, 245, 245, 0.774);">
+                        <!-- 选择文件 -->
+                        <div class="col-11 text-center ml-3 mt-2 justify-content-center" >
+                            <!-- 温馨提示操作 -->
+                            <span class="text-muted d-flex d-inline justify-content-center">温馨提示：免费的文字在线识别工具-我们的Ocr服务支持中文、繁体中文、日语、韩语、英语、法语、俄语、德语等多种语言</span>
+                            <!-- 操作步骤 -->
+                            <!-- 第一步 -->
+                            <h5 class="mt-3"><span class="text-muted mt-3" style="font-size: 1rem;">1.上传图片，支持jpg/jpeg/png/bmp格式文件</span></h5>
+                            <form  enctype="multipart/form-data" class="forms">
+                                <a class="d-inline-block border-primary rounded pt-2 text-center pb-2 pl-12 pr-12 col-12 mt-1" style=" position: relative;
+                                                                                                                        background: #D0EEFF;
+                                                                                                                        overflow: hidden;
+                                                                                                                        color: #1E88C7;
+                                                                                                                        text-decoration: none;
+                                                                                                                        text-indent: 0;
+                                                                                                                        line-height: 20px;">单击上传文件
+                                    <input type="file" name="pic" class="uploadFile" style="position: absolute;
+                                                                            font-size: 100px;
+                                                                            right: 0;
+                                                                            top: 0;
+                                                                            opacity: 0;">
+                                </a>
+                            </form>
+                                <!-- 第二步预览 -->
+                            <div class = "row ml-1 text-center justify-content-center">
+                                <p class="mt-3"><span class="text-muted mt-3 text-right" style="font-size: 1rem;">2.预览图片</span></p>
+                                <img src="#" class="previewImg" style="display: none;" class="col-12">
+                            </div>
+
+                            <!-- 第三步转换 -->
+                            <div class="row ml-1 justify-content-center">
+                                <p class="mt-3"><span class="text-muted mt-3" style="font-size: 1rem;">3.识别文字</span></p>
+                                <button type="button" class="btn btn-outline-primary btn-lg btn-block identifyBtn" >单击开始识别文字</button>
+                            </div>
+                            
+                            <!-- 第四步显示结果 -->
+                            <div class="row ml-1 result">
+                            </div>
+                                    
+                        </div>
+                                
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 身份证识别*****身份证识别***************身份证识别**************** -->
+            <div class="tab-pane fade" id="idCard" role="tabpanel" aria-labelledby="idCard-tab">
+                <div class="container">
+                    <div class="row " style="background-color: rgba(245, 245, 245, 0.774);">
+                        <!-- 选择文件 -->
+                        <div class="col-11 text-center ml-3 mt-2 justify-content-center" >
+                            <!-- 操作步骤 -->
+                            <!-- 第一步 -->
+                            <h5 class="mt-3"><span class="text-muted mt-3" style="font-size: 1rem;">1.上传图片，支持jpg/jpeg/png/bmp格式文件</span></h5>
+                            <form  enctype="multipart/form-data" class="forms">
+                                <a class="d-inline-block border-primary rounded pt-2 text-center pb-2 pl-12 pr-12 col-12 mt-1" style=" position: relative;
+                                                                                                                        background: #D0EEFF;
+                                                                                                                        overflow: hidden;
+                                                                                                                        color: #1E88C7;
+                                                                                                                        text-decoration: none;
+                                                                                                                        text-indent: 0;
+                                                                                                                        line-height: 20px;">单击上传身份证文件
+                                    <input type="file" name="pic" class="uploadFile" style="position: absolute;
+                                                                            font-size: 100px;
+                                                                            right: 0;
+                                                                            top: 0;
+                                                                            opacity: 0;">
+                                </a>
+                            </form>
+                                <!-- 第二步预览 -->
+                            <div class = "row ml-1 text-center justify-content-center">
+                                <p class="mt-3"><span class="text-muted mt-3 text-right" style="font-size: 1rem;">2.预览图片</span></p>
+                                <img src="#" class="previewImg" style="display: none;" class="col-12">
+                            </div>
+
+                            <!-- 第三步转换 -->
+                            <div class="row ml-1 justify-content-center">
+                                <p class="mt-3"><span class="text-muted mt-3" style="font-size: 1rem;">3.识别身份证</span></p>
+                                <button type="button" class="btn btn-outline-primary btn-lg btn-block identifyBtn" >单击开始身份证</button>
+                            </div>
+                            
+                            <!-- 第四步显示结果 -->
+                            <div class="row ml-1 idCardInfo justify-content-center mt-3">
+                            </div>
+                                    
+                        </div>
+                                
+                    </div>
+                </div>
+            </div>
+
+            <!-- 银行卡识别*****银行卡识别***************银行卡识别**************** -->
+            <div class="tab-pane fade" id="bankCard" role="tabpanel" aria-labelledby="bankCard-tab">
+                <div class="container">
+                    <div class="row " style="background-color: rgba(245, 245, 245, 0.774);">
+                        <!-- 选择文件 -->
+                        <div class="col-11 text-center ml-3 mt-2 justify-content-center" >
+                            <!-- 操作步骤 -->
+                            <!-- 第一步 -->
+                            <h5 class="mt-3"><span class="text-muted mt-3" style="font-size: 1rem;">1.上传图片，支持jpg/jpeg/png/bmp格式文件</span></h5>
+                            <form  enctype="multipart/form-data" class="forms">
+                                <a class="d-inline-block border-primary rounded pt-2 text-center pb-2 pl-12 pr-12 col-12 mt-1" style=" position: relative;
+                                                                                                                        background: #D0EEFF;
+                                                                                                                        overflow: hidden;
+                                                                                                                        color: #1E88C7;
+                                                                                                                        text-decoration: none;
+                                                                                                                        text-indent: 0;
+                                                                                                                        line-height: 20px;">单击上传银行卡文件
+                                    <input type="file" name="pic" class="uploadFile" style="position: absolute;
+                                                                            font-size: 100px;
+                                                                            right: 0;
+                                                                            top: 0;
+                                                                            opacity: 0;">
+                                </a>
+                            </form>
+                                <!-- 第二步预览 -->
+                            <div class = "row ml-1 text-center justify-content-center">
+                                <p class="mt-3"><span class="text-muted mt-3 text-right" style="font-size: 1rem;">2.预览图片</span></p>
+                                <img src="#" class="previewImg" style="display: none;" class="col-12">
+                            </div>
+
+                            <!-- 第三步转换 -->
+                            <div class="row ml-1 justify-content-center">
+                                <p class="mt-3"><span class="text-muted mt-3" style="font-size: 1rem;">3.识别银行卡</span></p>
+                                <button type="button" class="btn btn-outline-primary btn-lg btn-block identifyBtn" >单击开始银行卡识别</button>
+                            </div>
+                            
+                            <!-- 第四步显示结果 -->
+                            <div class="row ml-1 bankInfo justify-content-center mt-3">
+                            </div>
+                                    
+                        </div>
+                                
+                    </div>
+                </div>
+            </div>
+
+            <!-- 名片识别*****名片识别***************名片识别********名片识别******** -->
+            <div class="tab-pane fade" id="businessCard" role="tabpanel" aria-labelledby="businessCard-tab">
+               <div class="container">
+                    <div class="row " style="background-color: rgba(245, 245, 245, 0.774);">
+                        <!-- 选择文件 -->
+                        <div class="col-11 text-center ml-3 mt-2 justify-content-center" >
+                            <!-- 操作步骤 -->
+                            <!-- 第一步 -->
+                            <h5 class="mt-3"><span class="text-muted mt-3" style="font-size: 1rem;">1.上传图片，支持jpg/jpeg/png/bmp格式文件</span></h5>
+                            <form  enctype="multipart/form-data" class="forms">
+                                <a class="d-inline-block border-primary rounded pt-2 text-center pb-2 pl-12 pr-12 col-12 mt-1" style=" position: relative;
+                                                                                                                        background: #D0EEFF;
+                                                                                                                        overflow: hidden;
+                                                                                                                        color: #1E88C7;
+                                                                                                                        text-decoration: none;
+                                                                                                                        text-indent: 0;
+                                                                                                                        line-height: 20px;">单击上传名片文件
+                                    <input type="file" name="pic" class="uploadFile" style="position: absolute;
+                                                                            font-size: 100px;
+                                                                            right: 0;
+                                                                            top: 0;
+                                                                            opacity: 0;">
+                                </a>
+                            </form>
+                                <!-- 第二步预览 -->
+                            <div class = "row ml-1 text-center justify-content-center">
+                                <p class="mt-3"><span class="text-muted mt-3 text-right" style="font-size: 1rem;">2.预览图片</span></p>
+                                <img src="#" class="previewImg" style="display: none;" class="col-12">
+                            </div>
+
+                            <!-- 第三步转换 -->
+                            <div class="row ml-1 justify-content-center">
+                                <p class="mt-3"><span class="text-muted mt-3" style="font-size: 1rem;">3.识别名片</span></p>
+                                <button type="button" class="btn btn-outline-primary btn-lg btn-block identifyBtn" >单击开始名片识别</button>
+                            </div>
+                            
+                            <!-- 第四步显示结果 -->
+                            <div class="row ml-1 businessCardInfo justify-content-center mt-3">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 车牌识别*****车牌识别***************车牌识别********车牌识别******** -->
+            <div class="tab-pane fade" id="licensePlate" role="tabpanel" aria-labelledby="licensePlate-tab">
+                <div class="container">
+                    <div class="row " style="background-color: rgba(245, 245, 245, 0.774);">
+                        <!-- 选择文件 -->
+                        <div class="col-11 text-center ml-3 mt-2 justify-content-center" >
+                            <!-- 操作步骤 -->
+                            <!-- 第一步 -->
+                            <h5 class="mt-3"><span class="text-muted mt-3" style="font-size: 1rem;">1.上传图片，支持jpg/jpeg/png/bmp格式文件</span></h5>
+                            <form  enctype="multipart/form-data" class="forms">
+                                <a class="d-inline-block border-primary rounded pt-2 text-center pb-2 pl-12 pr-12 col-12 mt-1" style=" position: relative;
+                                                                                                                        background: #D0EEFF;
+                                                                                                                        overflow: hidden;
+                                                                                                                        color: #1E88C7;
+                                                                                                                        text-decoration: none;
+                                                                                                                        text-indent: 0;
+                                                                                                                        line-height: 20px;">单击上传车牌文件
+                                    <input type="file" name="pic" class="uploadFile" style="position: absolute;
+                                                                            font-size: 100px;
+                                                                            right: 0;
+                                                                            top: 0;
+                                                                            opacity: 0;">
+                                </a>
+                            </form>
+                                <!-- 第二步预览 -->
+                            <div class = "row ml-1 text-center justify-content-center">
+                                <p class="mt-3"><span class="text-muted mt-3 text-right" style="font-size: 1rem;">2.预览图片</span></p>
+                                <img src="#" class="previewImg" style="display: none;" class="col-12">
+                            </div>
+
+                            <!-- 第三步转换 -->
+                            <div class="row ml-1 justify-content-center">
+                                <p class="mt-3"><span class="text-muted mt-3" style="font-size: 1rem;">3.识别车牌</span></p>
+                                <button type="button" class="btn btn-outline-primary btn-lg btn-block identifyBtn" >单击开始车牌识别</button>
+                            </div>
+                            
+                            <!-- 第四步显示结果 -->
+                            <div class="row ml-1 licensePlateInfo justify-content-center mt-3">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 营业执照*****营业执照***************营业执照********营业执照******** -->
+            <div class="tab-pane fade" id="businessLicense" role="tabpanel" aria-labelledby="businessLicense-tab">
+                <div class="container">
+                    <div class="row " style="background-color: rgba(245, 245, 245, 0.774);">
+                        <!-- 选择文件 -->
+                        <div class="col-11 text-center ml-3 mt-2 justify-content-center" >
+                            <!-- 操作步骤 -->
+                            <!-- 第一步 -->
+                            <h5 class="mt-3"><span class="text-muted mt-3" style="font-size: 1rem;">1.上传图片，支持jpg/jpeg/png/bmp格式文件</span></h5>
+                            <form  enctype="multipart/form-data" class="forms">
+                                <a class="d-inline-block border-primary rounded pt-2 text-center pb-2 pl-12 pr-12 col-12 mt-1" style=" position: relative;
+                                                                                                                        background: #D0EEFF;
+                                                                                                                        overflow: hidden;
+                                                                                                                        color: #1E88C7;
+                                                                                                                        text-decoration: none;
+                                                                                                                        text-indent: 0;
+                                                                                                                        line-height: 20px;">单击上传营业执照文件
+                                    <input type="file" name="pic" class="uploadFile" style="position: absolute;
+                                                                            font-size: 100px;
+                                                                            right: 0;
+                                                                            top: 0;
+                                                                            opacity: 0;">
+                                </a>
+                            </form>
+                                <!-- 第二步预览 -->
+                            <div class = "row ml-1 text-center justify-content-center">
+                                <p class="mt-3"><span class="text-muted mt-3 text-right" style="font-size: 1rem;">2.预览图片</span></p>
+                                <img src="#" class="previewImg" style="display: none;" class="col-12">
+                            </div>
+
+                            <!-- 第三步转换 -->
+                            <div class="row ml-1 justify-content-center">
+                                <p class="mt-3"><span class="text-muted mt-3" style="font-size: 1rem;">3.识别营业执照</span></p>
+                                <button type="button" class="btn btn-outline-primary btn-lg btn-block identifyBtn" >单击开始营业执照识别</button>
+                            </div>
+                            
+                            <!-- 第四步显示结果 -->
+                            <div class="row ml-1 businessLicenseInfo justify-content-center mt-3">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    <script src="dist/js/jquery-3.3.1.js"></script>
+	<script src="dist/js/popper.js"></script>
+    <script src="dist/js/bootstrap.js"></script>
+    <script>
+    // 定义全局变量存储文件名字
+    var imgName = "";
+    // 定义全局变量存储文用户使用哪一种识别方式，默认为通用文字识别****
+    var wayToIdentify = "通用文字识别";
+    // 当inputFile上传文件后获取文件名，赋值与预览图片标签内
+    var index = 0;
+    $(".uploadFile").bind("input propertychange",function(event){
+        // 获取当前class索引 index
+        index = $('.uploadFile').index(this);
+        // 通过ajax传图片给php文件，并保存至本地
+        var formData = new FormData($('.forms').eq(index)[0]);
+        formData.append('file',$(':file')[0].files[0]);
+        // console.log(imgName);
+        $.ajax({
+            url:'demo/uploadImg.php',
+            type:'post',
+            data:formData,
+            contentType: false,
+            processData: false,
+			success: function(res) {
+                // 判断res返回值
+                // console.log(res);
+                if(res == "图片上传失败"){
+                    alert("图片上传失败...请重试");
+                }else{
+                    // 显示图片并改变预览图片的路径
+                    imgName = res;
+                    $(".previewImg").eq(index).css("display","block").attr("src",'demo/userImg/'+res);
+                }
+			}
+        })
+    });
+
+
+    // 单击识别按钮开始
+    $(".identifyBtn").on("click",function(){
+        console.log(wayToIdentify);
+        // 判断用户有没有上传图片
+        if( imgName !== ""){
+            $.ajax({
+                url:'SDK/lib/AipOcr.php',
+                type:'post',
+                data:{"imgName":imgName,"wayToIdentify":wayToIdentify},
+                success: function(res) {
+                    // 判断res返回值
+                    // 将字符串转化为对象
+                    // console.log(res);
+                    const strToObj = JSON.parse(res);
+                    // console.log(strToObj);
+                    // 将字符串转化为数组
+                    var arr = []
+                    for (let i in strToObj) {
+                        let o = {};
+                        o[i] = strToObj[i];
+                        arr.push(o)
+                    }
+                    console.log(arr);
+                    switch (wayToIdentify){
+                        case "通用文字识别":
+                            // 获取返回数组内容
+                            var resultArr = arr[2]["words_result"];
+                            // 遍历resultArr数组并显示
+                            for (var i = 0; i < resultArr.length; i++) {
+                                $(".result").eq(index).append("<p class = 'mt-1'>"+resultArr[i]["words"]+"</p>");
+                            }
+                            break;
+                        case "身份证识别":
+                            // 获取返回数组内容
+                            var resultArr = new Array();
+                            resultArr[0] = arr[3]["words_result"]["住址"]["words"];//住址
+                            resultArr[1] = arr[3]["words_result"]["公民身份号码"]["words"];//公民身份号码
+                            resultArr[2] = arr[3]["words_result"]["姓名"]["words"];//姓名
+                            resultArr[3] = arr[3]["words_result"]["民族"]["words"];//民族
+                            resultArr[4] = arr[3]["words_result"]["性别"]["words"];//性别
+                            // 遍历resultArr数组并显示
+                            $(".idCardInfo").append("姓名："+resultArr[2]+"</br>");
+                            $(".idCardInfo").append("性别: "+resultArr[4]+"</br>");
+                            $(".idCardInfo").append("民族: "+resultArr[3]+"</br>");
+                            $(".idCardInfo").append("住址: "+resultArr[0])+"</br>";
+                            $(".idCardInfo").append("公民身份号码: "+resultArr[1]+"</br>");
+                            break;
+                        case "银行卡识别":
+                            var resultArr = new Array();
+                            resultArr[0] = arr[1]["result"]["bank_card_number"];//银行卡号
+                            resultArr[1] = arr[1]["result"]["bank_name"];//银行名字
+                            // 遍历resultArr数组并显示
+                            $(".bankInfo").append("银行卡号："+resultArr[0]+"</br>");
+                            $(".bankInfo").append("银行名字: "+resultArr[1]+"</br>");
+                            break;
+                        case "名片识别":
+                            var resultArr = new Array();
+                            resultArr[1] = arr[2]["words_result"]["COMPANY"];//公司名
+                            resultArr[2] = arr[2]["words_result"]["EMAIL"];//邮箱
+                            resultArr[3] = arr[2]["words_result"]["FAX"];//传真
+                            resultArr[4] = arr[2]["words_result"]["MOBILE"];//手机号
+                            resultArr[5] = arr[2]["words_result"]["NAME"];//名字
+                            resultArr[6] = arr[2]["words_result"]["TITLE"];//职称
+                            // 遍历resultArr数组并显示
+                            $(".businessCardInfo").append("名字:"+resultArr[5]+"</br>");
+                            $(".businessCardInfo").append("职称:"+resultArr[6]+"</br>");
+                            $(".businessCardInfo").append("邮箱:"+resultArr[2]+"</br>");
+                            $(".businessCardInfo").append("公司:"+resultArr[1]+"</br>");
+                            $(".businessCardInfo").append("地址:"+resultArr[0]+"</br>");
+                            $(".businessCardInfo").append("传真:"+resultArr[3]+"</br>");
+                            $(".businessCardInfo").append("手机号:"+resultArr[4]+"</br>");
+                            break;
+
+                        case "车牌识别":
+                            var resultArr = new Array();
+                            resultArr[1] = arr[1]["words_result"]["color"];//颜色
+                            resultArr[2] = arr[1]["words_result"]["number"];//牌号
+                            // 遍历resultArr数组并显示
+                            $(".licensePlateInfo").append("牌号:"+resultArr[2]+"</br>");
+                            $(".licensePlateInfo").append("颜色:"+resultArr[1]+"</br>");
+                            break;
+                        
+                        case "营业执照识别":
+                            var resultArr = new Array();
+                            resultArr[1] = arr[2]["words_result"]["单位名称"]["words"];//单位名称
+                            resultArr[2] = arr[2]["words_result"]["地址"]["words"];//地址
+                            resultArr[3] = arr[2]["words_result"]["成立日期"]["words"];//成立日期 
+                            resultArr[4] = arr[2]["words_result"]["有效期"]["words"];//有效期
+                            resultArr[5] = arr[2]["words_result"]["法人"]["words"];//法人 
+                            resultArr[6] = arr[2]["words_result"]["注册资本"]["words"];//注册资本
+                            resultArr[7] = arr[2]["words_result"]["社会信用代码"]["words"];//社会信用代码 
+                            resultArr[8] = arr[2]["words_result"]["类型"]["words"];//类型
+                            resultArr[9] = arr[2]["words_result"]["组成形式"]["words"];//组成形式 
+                            resultArr[10] = arr[2]["words_result"]["经营范围"]["words"];//经营范围
+                            resultArr[11] = arr[2]["words_result"]["证件编号"]["words"];//证件编号
+                            // 遍历resultArr数组并显示
+                            $(".businessLicenseInfo").append("单位名称:"+resultArr[1]+"</br>");
+                            $(".businessLicenseInfo").append("地址:"+resultArr[2]+"</br>");
+                            $(".businessLicenseInfo").append("成立日期:"+resultArr[3]+"</br>");
+                            $(".businessLicenseInfo").append("有效期:"+resultArr[4]+"</br>");
+                            $(".businessLicenseInfo").append("法人:"+resultArr[5]+"</br>");
+                            $(".businessLicenseInfo").append("注册资本:"+resultArr[6]+"</br>");
+                            $(".businessLicenseInfo").append("社会信用代码:"+resultArr[7]+"</br>");
+                            $(".businessLicenseInfo").append("类型:"+resultArr[8]+"</br>");
+                            $(".businessLicenseInfo").append("组成形式:"+resultArr[9]+"</br>");
+                            $(".businessLicenseInfo").append("经营范围:"+resultArr[10]+"</br>");
+                            $(".businessLicenseInfo").append("证件编号:"+resultArr[11]+"</br>");
+                            break;
+
+                    }
+                }
+            }) 
+        }else{
+            alert("请先上传图片！");
+        }
+    });
+
+
+    // 当识别方式改变时获取用户选择的哪一种识别方式
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function () {
+        wayToIdentify = $(this).text();
+    })
+    </script>
+
+
+
+</body>
+</html>
