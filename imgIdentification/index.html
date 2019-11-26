@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>图像识别</title>
+    <link rel="stylesheet" href="../dist/css/bootstrap.css">
+
+    <style>
+        *{
+            list-style: none;
+        }
+        .file:hover {
+            background: #AADFFD;
+            border-color: #78C3F3;
+            color: #004974;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- IPLogo -->
+	<header>
+		<div class="container">
+			<div class="row">
+				<div class="col-12 text-center" style="vertical-align: middle;">
+					<img src="index_imgs/logo.png" style="width: 5%; vertical-align:inherit;">
+					<p class="d-inline-block text-info ml-2" style="vertical-align:inherit;font-size: 3rem;">智能图像识别</p>
+				</div>
+			</div>
+		</div>
+    </header>
+    
+
+        <div class="container justify-content-around">
+            <div class="row" data-spy="scroll" data-target="myTab">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active text-dark" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">通用物体识别</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" id="logo-tab" data-toggle="tab" href="#logo" role="tab" aria-controls="logo" aria-selected="false">LOGO商标识别</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" id="animal-tab" data-toggle="tab" href="#animal" role="tab" aria-controls="animal" aria-selected="false">动物识别</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" id="plant-tab" data-toggle="tab" href="#plant" role="tab" aria-controls="plant" aria-selected="false">植物识别</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" id="dish-tab" data-toggle="tab" href="#dish" role="tab" aria-controls="dish" aria-selected="false">菜品识别</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" id="car-tab" data-toggle="tab" href="#car" role="tab" aria-controls="car" aria-selected="false">车型识别</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="tab-content" id="myTabContent">
+            <!-- 通用物体识别*****通用物体识别***************通用物体识别**************** -->
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="container">
+                    <div class="row " style="background-color: rgba(245, 245, 245, 0.774);">
+                        <!-- 选择文件 -->
+                        <div class="col-11 text-center ml-3 mt-2 justify-content-center" >
+                            <!-- 温馨提示操作 -->
+                            <span class="text-muted d-flex d-inline justify-content-center">用于通用物体及场景识别，即对于输入的一张图片（可正常解码，且长宽比适宜），输出图片中的多个物体及场景标签。</span>
+                            <!-- 操作步骤 -->
+                            <!-- 第一步 -->
+                            <h5 class="mt-3"><span class="text-muted mt-3" style="font-size: 1rem;">1.上传图片，支持jpg/jpeg/png/bmp格式文件</span></h5>
+                            <form  enctype="multipart/form-data" class="forms">
+                                <a class="d-inline-block border-primary rounded pt-2 text-center pb-2 pl-12 pr-12 col-12 mt-1" style=" position: relative;
+                                                                                                                        background: #D0EEFF;
+                                                                                                                        overflow: hidden;
+                                                                                                                        color: #1E88C7;
+                                                                                                                        text-decoration: none;
+                                                                                                                        text-indent: 0;
+                                                                                                                        line-height: 20px;">单击上传文件
+                                    <input type="file" name="pic" class="uploadFile" style="position: absolute;
+                                                                            font-size: 100px;
+                                                                            right: 0;
+                                                                            top: 0;
+                                                                            opacity: 0;">
+                                </a>
+                            </form>
+                                <!-- 第二步预览 -->
+                            <div class = "row ml-1 text-center justify-content-center">
+                                <p class="mt-3"><span class="text-muted mt-3 text-right" style="font-size: 1rem;">2.预览图片</span></p>
+                                <img src="#" class="previewImg" style="display: none;" class="col-12">
+                            </div>
+
+                            <!-- 第三步转换 -->
+                            <div class="row ml-1 justify-content-center">
+                                <p class="mt-3"><span class="text-muted mt-3" style="font-size: 1rem;">3.识别文字</span></p>
+                                <button type="button" class="btn btn-outline-primary btn-lg btn-block identifyBtn" >开始物体识别</button>
+                            </div>
+                            
+                            <!-- 第四步显示结果 -->
+                            <div class="row ml-1 result">
+                            </div>
+                                    
+                        </div>
+                                
+                    </div>
+                </div>
+            </div>
+            
+            <!-- LOGO商标识别*****LOGO商标识别***************LOGO商标识别**************** -->
+            <div class="tab-pane fade" id="logo" role="tabpanel" aria-labelledby="logo-tab">
+                <div class="container">
+                    <div class="row " style="background-color: rgba(245, 245, 245, 0.774);">
+                        <!-- 选择文件 -->
+                        <div class="col-11 text-center ml-3 mt-2 justify-content-center" >
+                            <!-- 操作步骤 -->
+                            <!-- 温馨提示操作 -->
+                            <span class="text-muted d-flex d-inline justify-content-center">用于检测和识别图片中的品牌LOGO信息。即对于输入的一张图片（可正常解码，且长宽比适宜），输出图片中LOGO的名称、位置和置信度。</span>
+                            <!-- 第一步 -->
+                            <h5 class="mt-3"><span class="text-muted mt-3" style="font-size: 1rem;">1.上传图片，支持jpg/jpeg/png/bmp格式文件</span></h5>
+                            <form  enctype="multipart/form-data" class="forms">
+                                <a class="d-inline-block border-primary rounded pt-2 text-center pb-2 pl-12 pr-12 col-12 mt-1" style=" position: relative;
+                                                                                                                        background: #D0EEFF;
+                                                                                                                        overflow: hidden;
+                                                                                                                        color: #1E88C7;
+                                                                                                                        text-decoration: none;
+                                                                                                                        text-indent: 0;
+                                                                                                                        line-height: 20px;">单击上传文件
+                                    <input type="file" name="pic" class="uploadFile" style="position: absolute;
+                                                                            font-size: 100px;
+                                                                            right: 0;
+                                                                            top: 0;
+                                                                            opacity: 0;">
+                                </a>
+                            </form>
+                                <!-- 第二步预览 -->
+                            <div class = "row ml-1 text-center justify-content-center">
+                                <p class="mt-3"><span class="text-muted mt-3 text-right" style="font-size: 1rem;">2.预览图片</span></p>
+                                <img src="#" class="previewImg" style="display: none;" class="col-12">
+                            </div>
+
+                            <!-- 第三步转换 -->
+                            <div class="row ml-1 justify-content-center">
+                                <p class="mt-3"><span class="text-muted mt-3" style="font-size: 1rem;">3.识别LOGO</span></p>
+                                <button type="button" class="btn btn-outline-primary btn-lg btn-block identifyBtn" >开始LOGO识别</button>
+                            </div>
+                            
+                            <!-- 第四步显示结果 -->
+                            <div class="row ml-1 result justify-content-center mt-3">
+                            </div>
+                                    
+                        </div>
+                                
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 动物识别*****动物识别***************动物识别**************** -->
+            <div class="tab-pane fade" id="animal" role="tabpanel" aria-labelledby="animal-tab">
+                <div class="container">
+                    <div class="row " style="background-color: rgba(245, 245, 245, 0.774);">
+                        <!-- 选择文件 -->
+                        <div class="col-11 text-center ml-3 mt-2 justify-content-center" >
+                            <!-- 操作步骤 -->
+                            <!-- 温馨提示操作 -->
+                            <span class="text-muted d-flex d-inline justify-content-center">请求用于识别一张图片。即对于输入的一张图片（可正常解码，且长宽比适宜），输出动物识别结果。</span>
+                            <!-- 第一步 -->
+                            <h5 class="mt-3"><span class="text-muted mt-3" style="font-size: 1rem;">1.上传图片，支持jpg/jpeg/png/bmp格式文件</span></h5>
+                            <form  enctype="multipart/form-data" class="forms">
+                                <a class="d-inline-block border-primary rounded pt-2 text-center pb-2 pl-12 pr-12 col-12 mt-1" style=" position: relative;
+                                                                                                                        background: #D0EEFF;
+                                                                                                                        overflow: hidden;
+                                                                                                                        color: #1E88C7;
+                                                                                                                        text-decoration: none;
+                                                                                                                        text-indent: 0;
+                                                                                                                        line-height: 20px;">单击上传动物文件
+                                    <input type="file" name="pic" class="uploadFile" style="position: absolute;
+                                                                            font-size: 100px;
+                                                                            right: 0;
+                                                                            top: 0;
+                                                                            opacity: 0;">
+                                </a>
+                            </form>
+                                <!-- 第二步预览 -->
+                            <div class = "row ml-1 text-center justify-content-center">
+                                <p class="mt-3"><span class="text-muted mt-3 text-right" style="font-size: 1rem;">2.预览图片</span></p>
+                                <img src="#" class="previewImg" style="display: none;" class="col-12">
+                            </div>
+
+                            <!-- 第三步转换 -->
+                            <div class="row ml-1 justify-content-center">
+                                <p class="mt-3"><span class="text-muted mt-3" style="font-size: 1rem;">3.识别动物</span></p>
+                                <button type="button" class="btn btn-outline-primary btn-lg btn-block identifyBtn" >开始动物识别</button>
+                            </div>
+                            
+                            <!-- 第四步显示结果 -->
+                            <div class="row ml-1 result justify-content-center mt-3">
+                            </div>
+                                    
+                        </div>
+                                
+                    </div>
+                </div>
+            </div>
+
+            <!-- 植物识别*****植物识别***************植物识别********植物识别******** -->
+            <div class="tab-pane fade" id="plant" role="tabpanel" aria-labelledby="plant-tab">
+               <div class="container">
+                    <div class="row " style="background-color: rgba(245, 245, 245, 0.774);">
+                        <!-- 选择文件 -->
+                        <div class="col-11 text-center ml-3 mt-2 justify-content-center" >
+                            <!-- 操作步骤 -->
+                            <!-- 温馨提示操作 -->
+                            <span class="text-muted d-flex d-inline justify-content-center">请求用于识别一张图片。即对于输入的一张图片（可正常解码，且长宽比适宜），输出植物识别结果。</span>
+                            <!-- 第一步 -->
+                            <h5 class="mt-3"><span class="text-muted mt-3" style="font-size: 1rem;">1.上传图片，支持jpg/jpeg/png/bmp格式文件</span></h5>
+                            <form  enctype="multipart/form-data" class="forms">
+                                <a class="d-inline-block border-primary rounded pt-2 text-center pb-2 pl-12 pr-12 col-12 mt-1" style=" position: relative;
+                                                                                                                        background: #D0EEFF;
+                                                                                                                        overflow: hidden;
+                                                                                                                        color: #1E88C7;
+                                                                                                                        text-decoration: none;
+                                                                                                                        text-indent: 0;
+                                                                                                                        line-height: 20px;">单击上传植物文件
+                                    <input type="file" name="pic" class="uploadFile" style="position: absolute;
+                                                                            font-size: 100px;
+                                                                            right: 0;
+                                                                            top: 0;
+                                                                            opacity: 0;">
+                                </a>
+                            </form>
+                                <!-- 第二步预览 -->
+                            <div class = "row ml-1 text-center justify-content-center">
+                                <p class="mt-3"><span class="text-muted mt-3 text-right" style="font-size: 1rem;">2.预览图片</span></p>
+                                <img src="#" class="previewImg" style="display: none;" class="col-12">
+                            </div>
+
+                            <!-- 第三步转换 -->
+                            <div class="row ml-1 justify-content-center">
+                                <p class="mt-3"><span class="text-muted mt-3" style="font-size: 1rem;">3.识别植物</span></p>
+                                <button type="button" class="btn btn-outline-primary btn-lg btn-block identifyBtn" >开始植物识别</button>
+                            </div>
+                            
+                            <!-- 第四步显示结果 -->
+                            <div class="row ml-1 result justify-content-center mt-3">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 菜品识别*****菜品识别***************菜品识别********菜品识别******** -->
+            <div class="tab-pane fade" id="dish" role="tabpanel" aria-labelledby="dish-tab">
+                <div class="container">
+                    <div class="row " style="background-color: rgba(245, 245, 245, 0.774);">
+                        <!-- 选择文件 -->
+                        <div class="col-11 text-center ml-3 mt-2 justify-content-center" >
+                            <!-- 操作步骤 -->
+                            <!-- 温馨提示操作 -->
+                            <span class="text-muted d-flex d-inline justify-content-center">用于菜品识别。即对于输入的一张图片（可正常解码，且长宽比适宜），输出图片的菜品名称、卡路里信息、置信度。</span>                            
+                            <!-- 第一步 -->
+                            <h5 class="mt-3"><span class="text-muted mt-3" style="font-size: 1rem;">1.上传图片，支持jpg/jpeg/png/bmp格式文件</span></h5>
+                            <form  enctype="multipart/form-data" class="forms">
+                                <a class="d-inline-block border-primary rounded pt-2 text-center pb-2 pl-12 pr-12 col-12 mt-1" style=" position: relative;
+                                                                                                                        background: #D0EEFF;
+                                                                                                                        overflow: hidden;
+                                                                                                                        color: #1E88C7;
+                                                                                                                        text-decoration: none;
+                                                                                                                        text-indent: 0;
+                                                                                                                        line-height: 20px;">单击上传菜品文件
+                                    <input type="file" name="pic" class="uploadFile" style="position: absolute;
+                                                                            font-size: 100px;
+                                                                            right: 0;
+                                                                            top: 0;
+                                                                            opacity: 0;">
+                                </a>
+                            </form>
+                                <!-- 第二步预览 -->
+                            <div class = "row ml-1 text-center justify-content-center">
+                                <p class="mt-3"><span class="text-muted mt-3 text-right" style="font-size: 1rem;">2.预览图片</span></p>
+                                <img src="#" class="previewImg" style="display: none;" class="col-12">
+                            </div>
+
+                            <!-- 第三步转换 -->
+                            <div class="row ml-1 justify-content-center">
+                                <p class="mt-3"><span class="text-muted mt-3" style="font-size: 1rem;">3.识别菜品</span></p>
+                                <button type="button" class="btn btn-outline-primary btn-lg btn-block identifyBtn" >开始菜品识别</button>
+                            </div>
+                            
+                            <!-- 第四步显示结果 -->
+                            <div class="row ml-1 result justify-content-center mt-3">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 车型识别*****车型识别***************车型识别********车型识别******** -->
+            <div class="tab-pane fade" id="car" role="tabpanel" aria-labelledby="car-tab">
+                <div class="container">
+                    <div class="row " style="background-color: rgba(245, 245, 245, 0.774);">
+                        <!-- 选择文件 -->
+                        <div class="col-11 text-center ml-3 mt-2 justify-content-center" >
+                            <!-- 操作步骤 -->
+                            <!-- 温馨提示操作 -->
+                            <span class="text-muted d-flex d-inline justify-content-center">用于检测一张车辆图片的具体车型。即对于输入的一张图片（可正常解码，且长宽比适宜），输出图片的车辆品牌及型号。</span>                            
+                            <!-- 第一步 -->
+                            <h5 class="mt-3"><span class="text-muted mt-3" style="font-size: 1rem;">1.上传图片，支持jpg/jpeg/png/bmp格式文件</span></h5>
+                            <form  enctype="multipart/form-data" class="forms">
+                                <a class="d-inline-block border-primary rounded pt-2 text-center pb-2 pl-12 pr-12 col-12 mt-1" style=" position: relative;
+                                                                                                                        background: #D0EEFF;
+                                                                                                                        overflow: hidden;
+                                                                                                                        color: #1E88C7;
+                                                                                                                        text-decoration: none;
+                                                                                                                        text-indent: 0;
+                                                                                                                        line-height: 20px;">单击上传车型文件
+                                    <input type="file" name="pic" class="uploadFile" style="position: absolute;
+                                                                            font-size: 100px;
+                                                                            right: 0;
+                                                                            top: 0;
+                                                                            opacity: 0;">
+                                </a>
+                            </form>
+                                <!-- 第二步预览 -->
+                            <div class = "row ml-1 text-center justify-content-center">
+                                <p class="mt-3"><span class="text-muted mt-3 text-right" style="font-size: 1rem;">2.预览图片</span></p>
+                                <img src="#" class="previewImg" style="display: none;" class="col-12">
+                            </div>
+
+                            <!-- 第三步转换 -->
+                            <div class="row ml-1 justify-content-center">
+                                <p class="mt-3"><span class="text-muted mt-3" style="font-size: 1rem;">3.识别车型</span></p>
+                                <button type="button" class="btn btn-outline-primary btn-lg btn-block identifyBtn" >开始车型识别</button>
+                            </div>
+                            
+                            <!-- 第四步显示结果 -->
+                            <div class="row ml-1 result justify-content-center mt-3">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    <script src="../dist/js/jquery-3.3.1.js"></script>
+	<script src="../dist/js/popper.js"></script>
+    <script src="../dist/js/bootstrap.js"></script>
+    <script>
+    // 定义全局变量存储文件名字
+    var imgName = "";
+    // 定义全局变量存储文用户使用哪一种识别方式，默认为通用文字识别****
+    var wayToIdentify = "通用物体识别";
+    // 当inputFile上传文件后获取文件名，赋值与预览图片标签内
+    var index = 0;
+    $(".uploadFile").bind("input propertychange",function(event){
+        // 获取当前class索引 index
+        index = $('.uploadFile').index(this);
+        // 通过ajax传图片给php文件，并保存至本地
+        var formData = new FormData($('.forms').eq(index)[0]);
+        formData.append('file',$(':file')[0].files[0]);
+        // console.log(imgName);
+        $.ajax({
+            url:'demo/uploadImg.php',
+            type:'post',
+            data:formData,
+            contentType: false,
+            processData: false,
+			success: function(res) {
+                // 判断res返回值
+                // console.log(res);
+                if(res == "图片上传失败"){
+                    alert("图片上传失败...请重试");
+                }else{
+                    // 显示图片并改变预览图片的路径
+                    imgName = res;
+                    $(".previewImg").eq(index).css("display","block").attr("src",'demo/userImg/'+res);
+                }
+			}
+        })
+    });
+
+
+    // 单击识别按钮开始
+    $(".identifyBtn").on("click",function(){
+        $(".result div").remove();
+        // console.log(wayToIdentify);
+        // 判断用户有没有上传图片
+        if( imgName !== ""){
+            $.ajax({
+                url:'SDK/lib/AipImageClassify.php',
+                type:'post',
+                data:{"imgName":imgName,"wayToIdentify":wayToIdentify},
+                success: function(res) {
+                    // 判断res返回值
+                    // 将字符串转化为对象
+                    // console.log(res);
+                    const strToObj = JSON.parse(res);
+                    // console.log(strToObj);
+                    // 将字符串转化为数组
+                    var arr = []
+                    for (let i in strToObj) {
+                        let o = {};
+                        o[i] = strToObj[i];
+                        arr.push(o)
+                    }
+                    // console.log(arr);
+                    switch (wayToIdentify){
+                        case "通用物体识别":
+                            // 获取返回数组内容
+                            var resultArr = arr[2]["result"];
+                            // console.log(resultArr);
+                            // 遍历resultArr数组并显示
+                            for (var i = 0; i < resultArr.length; i++) {
+                                $(".result").eq(index).append("<div class = 'mt-1 col-12 text-muted'>"+resultArr[i]["root"]+"</div>");
+                                $(".result").eq(index).append("<div class = 'mt-1 col-12' style = 'font-size:1.5rem;'>"+resultArr[i]["keyword"]+"</div>");
+                            }
+                            break;
+                        case "LOGO商标识别":
+                            // 获取返回数组内容
+                            var resultArr = arr[2]["result"];
+                            console.log(resultArr);
+                            // 遍历resultArr数组并显示
+                            for (var i = 0; i < resultArr.length; i++) {
+                                $(".result").eq(index).append("<div class = 'mt-1 col-12 text-muted'>"+
+                                    "width:"+resultArr[i]["location"]["width"]+"      "+
+                                    "height:"+resultArr[i]["location"]["height"]+"     "+
+                                    "top:"+resultArr[i]["location"]["top"]+"      "+
+                                    "left:"+resultArr[i]["location"]["left"]+"      "+
+                                    "</div>");
+                                $(".result").eq(index).append("<div class = 'mt-1 col-12' style = 'font-size:1.5rem;'>"+resultArr[i]["name"]+"</div>");
+                            }
+                            break;
+                        case "动物识别":
+                            var resultArr = arr[1]["result"];
+                            // 遍历resultArr数组并显示
+                            for (var i = 0; i < resultArr.length; i++) {
+                                $(".result").eq(index).append("<div class = 'mt-1 col-12 text-muted'>"+"置信度:"+resultArr[i]["score"]+"</div>");
+                                $(".result").eq(index).append("<div class = 'mt-1 col-12' style = 'font-size:1.5rem;'>"+resultArr[i]["name"]+"</div>");
+                            }
+                            break;
+
+                        case "植物识别":
+                            var resultArr = arr[1]["result"];
+                            // 遍历resultArr数组并显示
+                            for (var i = 0; i < resultArr.length; i++) {
+                                $(".result").eq(index).append("<div class = 'mt-1 col-12 text-muted'>"+"置信度:"+resultArr[i]["score"]+"</div>");
+                                $(".result").eq(index).append("<div class = 'mt-1 col-12' style = 'font-size:1.5rem;'>"+resultArr[i]["name"]+"</div>");
+                            }
+                            break;
+                        
+                        case "菜品识别":
+                            var resultArr = arr[2]["result"];
+                            // 遍历resultArr数组并显示
+                            for (var i = 0; i < resultArr.length; i++) {
+                                $(".result").eq(index).append("<div class = 'mt-1 col-12 text-muted'>"+
+                                    "置信度:"+resultArr[i]["probability"]+"      "+
+                                    "卡路里:"+resultArr[i]["calorie"]+"     "+
+                                    "</div>");
+                                $(".result").eq(index).append("<div class = 'mt-1 col-12' style = 'font-size:1.5rem;'>"+resultArr[i]["name"]+"</div>");
+                            }
+                            break;
+                        
+                        case "车型识别":
+                            var resultArr = arr[2]["result"];
+                            var color = arr[3]["color_result"];
+                            // 遍历resultArr数组并显示
+                            for (var i = 0; i < resultArr.length; i++) {
+                                $(".result").eq(index).append("<div class = 'mt-1 col-12 text-muted'>"+
+                                    "置信度:"+resultArr[i]["score"]+"      "+
+                                    "上市年份:"+resultArr[i]["year"]+"     "+
+                                    "颜色:"+color+"     "+
+                                    "</div>");
+                                $(".result").eq(index).append("<div class = 'mt-1 col-12' style = 'font-size:1.5rem;'>"+resultArr[i]["name"]+"</div>");
+                            }
+                            break;
+
+                    }
+                }
+            }) 
+        }else{
+            alert("请先上传图片！");
+        }
+    });
+
+
+    // 当识别方式改变时获取用户选择的哪一种识别方式
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function () {
+        wayToIdentify = $(this).text();
+        // console.log(wayToIdentify);
+    })
+    </script>
+
+
+
+</body>
+</html>
