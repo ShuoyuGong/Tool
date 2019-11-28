@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>图像识别</title>
+    <link rel="stylesheet" href="../dist/css/bootstrap.css">
+
+    <style>
+        *{
+            list-style: none;
+        }
+        .file:hover {
+            background: #AADFFD;
+            border-color: #78C3F3;
+            color: #004974;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- IPLogo -->
+	<header>
+		<div class="container">
+			<div class="row">
+				<div class="col-12 text-center" style="vertical-align: middle;">
+					<img src="index_img/faceLogo.png" style="width: 5%; vertical-align:inherit;">
+					<p class="d-inline-block text-info ml-2" style="vertical-align:inherit;font-size: 3rem;">智能人脸识别</p>
+				</div>
+			</div>
+		</div>
+    </header>
+    
+
+        <div class="container justify-content-around">
+            <div class="row" data-spy="scroll" data-target="myTab">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active text-dark" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">人脸检测</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" id="contrast-tab" data-toggle="tab" href="#contrast" role="tab" aria-controls="contrast" aria-selected="false">人脸对比</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="tab-content" id="myTabContent">
+            <!-- 人脸检测*****人脸检测***************人脸检测**************** -->
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <!-- <div class="container"> -->
+                    <div class="row " style="background-color: rgba(245, 245, 245, 0.774);">
+                        <!-- 选择文件 -->
+                        <div class="col-12 text-center ml-3 mt-2 justify-content-center" >
+                            <!-- 温馨提示操作 -->
+                            <span class="text-muted d-flex d-inline justify-content-center">人脸检测：检测图片中的人脸并标记出位置信息</span>
+                            <!-- 操作步骤 -->
+                            <!-- 第一步 -->
+                            <h5 class="mt-3"><span class="text-muted mt-3" style="font-size: 1rem;">1.上传图片，支持jpg/jpeg/png/bmp格式文件</span></h5>
+                            <form  enctype="multipart/form-data" class="forms">
+                                <a class="d-inline-block border-primary rounded pt-2 text-center pb-2 pl-12 pr-12 col-12 mt-1" style=" position: relative;
+                                                                                                                        background: #D0EEFF;
+                                                                                                                        overflow: hidden;
+                                                                                                                        color: #1E88C7;
+                                                                                                                        text-decoration: none;
+                                                                                                                        text-indent: 0;
+                                                                                                                        line-height: 20px;">单击上传人脸文件
+                                    <input type="file" name="pic" class="uploadFile" style="position: absolute;
+                                                                            font-size: 100px;
+                                                                            right: 0;
+                                                                            top: 0;
+                                                                            opacity: 0;">
+                                </a>
+                            </form>
+                                <!-- 第二步预览 -->
+                            <div class = "row ml-1 text-center justify-content-center">
+                                <canvas id="c1" style="position: absolute;margin-left: 40px;"></canvas>
+                                <p class="mt-3"><span class="text-muted mt-3 text-right" style="font-size: 1rem;">2.预览图片</span></p>
+                                <img src="#" class="previewImg img-fluid" style="display: none;" class="col-12">
+                            </div>
+
+                            <!-- 第三步转换 -->
+                            <div class="row ml-1 justify-content-center">
+                                <p class="mt-3"><span class="text-muted mt-3" style="font-size: 1rem;">3.识别文字</span></p>
+                                <button type="button" class="btn btn-outline-primary btn-lg btn-block identifyBtn" >开始人脸检测</button>
+                            </div>
+                            
+                            <!-- 第四步显示结果 -->
+                            <div class="row ml-1 result">
+                            </div>
+                        </div>
+                    </div>
+                <!-- </div> -->
+            </div>
+            
+            <!-- 人脸对比*****人脸对比***************人脸对比**************** -->
+            <div class="tab-pane fade" id="contrast" role="tabpanel" aria-labelledby="contrast-tab">
+                    <div class="row " style="background-color: rgba(245, 245, 245, 0.774);">
+                        <!-- 选择文件 -->
+                        <div class="col-12 text-center ml-3 mt-2 justify-content-center" >
+                            <!-- 操作步骤 -->
+                            <!-- 温馨提示操作 -->
+                            <span class="text-muted d-flex d-inline justify-content-center">两张人脸图片相似度对比：比对两张图片中人脸的相似度，并返回相似度分值。</span>
+                            <span class="text-muted d-flex d-inline justify-content-center">活体检测：基于图片中的破绽分析，判断其中的人脸是否为二次翻拍</span>   
+                            <span class="text-muted d-flex d-inline justify-content-center">（举例：如用户A用手机拍摄了一张包含人脸的图片一，用户B翻拍了图片一得到了图片二，并用图片二伪造成用户A去进行识别操作，这种情况普遍发生在金融开户、实名认证等环节。）</span>
+                            <span class="text-muted d-flex d-inline justify-content-center">质量检测：返回模糊、光照等质量检测信息，用于辅助判断图片是否符合识别要求</span>
+                            <!-- 第一步 -->
+                            <h5 class="mt-3"><span class="text-muted mt-3" style="font-size: 1rem;">1.上传图片，支持jpg/jpeg/png/bmp格式文件</span></h5>
+                            <form  enctype="multipart/form-data" class="forms">
+                                <a class="d-inline-block border-primary rounded pt-2 text-center pb-2 pl-12 pr-12 col-12 mt-1" style=" position: relative;
+                                                                                                                        background: #D0EEFF;
+                                                                                                                        overflow: hidden;
+                                                                                                                        color: #1E88C7;
+                                                                                                                        text-decoration: none;
+                                                                                                                        text-indent: 0;
+                                                                                                                        line-height: 20px;">单击上传文件(1)
+                                    <input type="file" name="pic" class="uploadFile" style="position: absolute;
+                                                                            font-size: 100px;
+                                                                            right: 0;
+                                                                            top: 0;
+                                                                            opacity: 0;">
+                                </a>
+                            </form>
+                            <div class = "row ml-1 text-center justify-content-center col-12">
+                                <div class = "row col-12 justify-content-center">
+                                    <p class="mt-3"><span class="text-muted mt-3 text-right" style="font-size: 1rem;">预览图片(1)</span></p>
+                                    <img src="#" class="previewImg" style="display: none;" class="col-6">
+                                </div>
+                            </div>
+                            <form  enctype="multipart/form-data" class="forms">
+                                <a class="d-inline-block border-primary rounded pt-2 text-center pb-2 pl-12 pr-12 col-12 mt-1" style=" position: relative;
+                                                                                                                        background: #D0EEFF;
+                                                                                                                        overflow: hidden;
+                                                                                                                        color: #1E88C7;
+                                                                                                                        text-decoration: none;
+                                                                                                                        text-indent: 0;
+                                                                                                                        line-height: 20px;">单击上传文件(2)
+                                    <input type="file" name="pic" class="uploadFile" style="position: absolute;
+                                                                            font-size: 100px;
+                                                                            right: 0;
+                                                                            top: 0;
+                                                                            opacity: 0;">
+                                </a>
+                            </form>
+                            
+                            <!-- 第二步预览 -->
+                            <div class = "row ml-1 text-center justify-content-center col-12">
+                                <div class = "row col-12 justify-content-center mt-3">
+                                    <p class="mt-3"><span class="text-muted mt-3 text-right" style="font-size: 1rem;">预览图片(2)</span></p>
+                                    <img src="#" class="previewImg" style="display: none;" class="col-6">
+                                </div>
+                            </div>
+
+                            <!-- 第三步转换 -->
+                            <div class="row ml-1 justify-content-center col-12">
+                                <p class="mt-3"><span class="text-muted mt-3" style="font-size: 1rem;">3.人脸对比</span></p>
+                                <button type="button" class="btn btn-outline-primary btn-lg btn-block identifyBtn col-12" >开始人脸对比</button>
+                            </div>
+                            
+                            <!-- 第四步显示结果 -->
+                            <div class="row ml-1" id="similarity">
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    <script src="../dist/js/jquery-3.3.1.js"></script>
+	<script src="../dist/js/popper.js"></script>
+    <script src="../dist/js/bootstrap.js"></script>
+    <script>
+    // 定义全局变量存储文件名字
+    var imgName = "";
+    var imgName1 = "";
+    // 定义全局变量存储文用户使用哪一种识别方式，默认为通用文字识别****
+    var wayToIdentify = "人脸检测";
+    // 当inputFile上传文件后获取文件名，赋值与预览图片标签内
+    var index = 0;
+    // 创建宽高变量，用于存储图片的宽高
+    var imgWidth = 0;
+    var imgHeight = 0;
+    // 当图片加载时，获取图片的宽高
+    $(".previewImg").eq(index).on("load",function(){
+        imgWidth = $(this).width();
+        imgHeight = $(this).height();
+    });
+
+    $(".uploadFile").bind("input propertychange",function(event){
+        // 获取当前class索引 index
+        index = $('.uploadFile').index(this);
+        // 通过ajax传图片给php文件，并保存至本地
+        var formData = new FormData($('.forms').eq(index)[0]);
+        formData.append('file',$(':file')[0].files[0]);
+        // console.log(imgName);
+        $.ajax({
+            url:'demo/uploadImg.php',
+            type:'post',
+            data:formData,
+            contentType: false,
+            processData: false,
+			success: function(res) {
+                // 判断res返回值
+                // console.log(res);
+                if(res == "图片上传失败"){
+                    alert("图片上传失败...请重试");
+                }else{
+                    // 显示图片并改变预览图片的路径
+                    if(index == 1 || index == 0){
+                        imgName = res;
+                    }else if(index == 2){
+                        imgName1 = res;
+                    }
+                    $(".previewImg").eq(index).css("display","inline-block").attr("src",'demo/userImg/'+res);
+                    var canvas = document.getElementById("c1");
+                    canvas.style.display = "none";
+                    // console.log(index);
+                }
+			}
+        })
+    });
+
+
+    // 单击识别按钮开始
+    $(".identifyBtn").on("click",function(){
+        $(".result div").remove();
+        $("#similarity div").remove();
+        // console.log(wayToIdentify);
+        // 判断用户有没有上传图片
+        if( imgName !== ""){
+            $.ajax({
+                url:'SDK/lib/AipFace.php',
+                type:'post',
+                data:{"imgName":imgName,"wayToIdentify":wayToIdentify,"imgName1":imgName1},
+                success: function(res) {
+                    // 判断res返回值
+                    // 将字符串转化为对象
+                    // console.log(res);
+                    const strToObj = JSON.parse(res);
+                    // console.log(strToObj);
+                    // 将字符串转化为数组
+                    var arr = []
+                    for (let i in strToObj) {
+                        let o = {};
+                        o[i] = strToObj[i];
+                        arr.push(o)
+                    }
+                    // console.log(arr);
+                    // 赋值返回结果状态，并判断
+                    var status = arr[1]["error_msg"];
+                    if(status == "SUCCESS"){
+                        switch (wayToIdentify){
+                            case "人脸检测":
+                                // 获取返回数组内容
+                                var resultArr = arr[5]["result"]["face_list"][0];
+                                var age = resultArr["age"];//年龄
+                                var beauty = resultArr["beauty"];//漂亮程度 0 -100
+                                var emotion = resultArr["emotion"]["type"];//情绪
+                                var emotionProbability = resultArr["emotion"]["probability"];//情绪置信度
+                                var expression = resultArr["expression"]["type"];//表情
+                                var expressionProbability = resultArr["expression"]["probability"];//表情置信度
+                                var leftEyeStatus = resultArr["eye_status"]["left_eye"];//左眼状态 0-1
+                                var rightEyeStatus = resultArr["eye_status"]["right_eye"];//右眼状态 0-1
+                                var gender = resultArr["gender"]["type"];//性别
+                                var genderProbability = resultArr["gender"]["probability"];//性别置信度
+                                var race = resultArr["race"]["type"];//人种
+                                var raceProbability = resultArr["race"]["probability"];//人种置信度
+                                var locationLeft = resultArr["location"]["left"];//人脸区域离左边界的距离
+                                var locationHeight = resultArr["location"]["height"];//人脸区域的高度
+                                var locationTop = resultArr["location"]["top"];//人脸区域离上边界的距离
+                                var locationWidth = resultArr["location"]["width"];//人脸区域的宽度
+                                // 遍历resultArr数组并显示
+                                // ***************绘制canvas*******************
+                                var canvas = document.getElementById("c1");
+                                canvas.style.display = "block";
+                                canvas.width = imgWidth;
+                                canvas.height = imgHeight;
+                                var ctx = canvas.getContext("2d");
+                                ctx.lineWidth=3;
+                                ctx.strokeStyle="#1E88C7";
+                                ctx.strokeRect(locationLeft,locationTop,locationWidth,locationHeight);
+                                // ***************DOM节点赋值*******************
+                                $(".result").eq(index).append("<div class = 'mt-3 col-12 text-muted'>人种：(yellow: 黄种人 white: 白种人 black:黑种人 arabs: 阿拉伯人)</div>");
+                                $(".result").eq(index).append("<div class = 'col-12' style = 'font-size:1.5rem;'>"+race+"&nbsp;&nbsp;&nbsp;&nbsp;置信度："+raceProbability+"</div>");
+                                $(".result").eq(index).append("<div class = 'mt-3 col-12' style = 'font-size:1.5rem;'>年龄："+age+"</div>");
+                                $(".result").eq(index).append("<div class = 'mt-3 col-12 text-muted'>颜值：(美丑打分，范围0-100，越大表示越美。)</div>");
+                                $(".result").eq(index).append("<div class = 'col-12' style = 'font-size:1.5rem;'>"+beauty+"</div>");
+                                $(".result").eq(index).append("<div class = 'mt-3 col-12' style = 'font-size:1.5rem;'>性别："+gender+"&nbsp;&nbsp;&nbsp;&nbsp;置信度："+genderProbability+"</div>");
+                                $(".result").eq(index).append("<div class = 'mt-3 col-12 text-muted'>表情：(break;none:不笑；smile:微笑；laugh:大笑)</div>");
+                                $(".result").eq(index).append("<div class = 'col-12' style = 'font-size:1.5rem;'>"+expression+"&nbsp;&nbsp;&nbsp;&nbsp;置信度："+expressionProbability+"</div>");
+                                $(".result").eq(index).append("<div class = 'mt-3 col-12 text-muted'>情绪：(angry:愤怒 disgust:厌恶 fear:恐惧 happy:高兴sad:伤心 surprise:惊讶 neutral:无情绪)</div>");
+                                $(".result").eq(index).append("<div class = 'col-12' style = 'font-size:1.5rem;'>"+emotion+"&nbsp;&nbsp;&nbsp;&nbsp;置信度："+emotionProbability+"</div>");
+                                $(".result").eq(index).append("<div class = 'mt-3 col-12 text-muted'>双眼状态：([0,1]取值，越接近0闭合的可能性越大)</div>");
+                                $(".result").eq(index).append("<div class = 'col-12' style = 'font-size:1.5rem;'>左眼状态："+leftEyeStatus+"</div>");
+                                $(".result").eq(index).append("<div class = 'col-12' style = 'font-size:1.5rem;'>右眼状态："+rightEyeStatus+"</div>");
+                                break;
+                            case "人脸对比":
+                                // 获取返回数组内容
+                                // console.log(arr);
+                                var similarity = Math.floor(arr[5].result.score);//相似度得分
+                                $("#similarity").append("<div class = 'col-12 mt-5 text-muted'>对比结果(相似分0-100，分数越高代表图片中人物越像)</div>");
+                                $("#similarity").append("<div class = 'col-12' style = 'font-size:10rem;'>"+similarity+"</div>");
+                                if(similarity >= 60){
+                                    $("#similarity").append("<div class = 'col-12' style = 'font-size:2rem;'>根据系统判定，是同一人</div>");
+                                }else{
+                                    $("#similarity").append("<div class = 'col-12' style = 'font-size:2rem;'>根据系统判定，不是同一人</div>");
+                                }
+                                break;
+                        }
+                    }else{
+                        alert("识别错误！请重试！")
+                    }
+                }
+            }) 
+        }else{
+            alert("请先上传图片！");
+        }
+    });
+
+
+    // 当识别方式改变时获取用户选择的哪一种识别方式
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function () {
+        wayToIdentify = $(this).text();
+        // console.log(wayToIdentify);
+    })
+    </script>
+
+
+
+</body>
+</html>
