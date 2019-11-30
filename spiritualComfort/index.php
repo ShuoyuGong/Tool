@@ -24,12 +24,36 @@ $tit = date('m 月 d 日');
 	<link rel="icon" href="/favicon.ico" type="image/x-icon" id="page_favionc">
 	<link href="./img/min.css" rel="stylesheet">
 	<link rel="alternate icon" type="image/png" href="icon.png">
-
+	<link rel="stylesheet" href="../dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../dist/css/animate.css">
 </head>
 <body>
+<header class="animated bounceInDown fast"> <!--delay-5s -->
+        <div class="collapse bg-transparent" id="navbarHeader">
+            <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-md-7 py-4">
+                <h4 class="text-black"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">关于</font></font></h4>
+                <p class="text-muted">API接口开发，实时状态查询</p>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="navbar navbar-dark badge-success shadow-sm">
+            <div class="container d-flex justify-content-between">
+            <a href="../index.html" class="navbar-brand d-flex align-items-center">
+                <img src="../index_img/tools.png" class="img-fluid mr-2">
+                <strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Everything(TOOLS)</font></font></strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="切换导航">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            </div>
+        </div>
+    </header>
 <div class="top-wrap" style="position: absolute; top: 1vh;width: 100%;z-index: 999"> 
 <div class="container">
-	<div class="row" style="margin-top: 30px;">
+	<div class="row" style="margin-top: 70px;">
 	    <div class="col">
 	      <img src="./img/logo.png">
 	    </div>
@@ -52,10 +76,10 @@ $tit = date('m 月 d 日');
 	<div class="container">
 		<div class="row">
 			<div class="col text-center">
-	            <span class="btn btn-primary btn-filled btn-xs"><a class="btn btn-primary btn-filled btn-xs" href="javascript:location.reload()" >再来一碗</a></span>
+	            <span class="btn btn-success btn-filled btn-xs"><a class="btn btn-success btn-filled btn-xs" href="javascript:location.reload()" >再来一碗</a></span>
 				<br>
 				<br>
-				<span class="btn btn-primary btn-filled btn-xs"><a class="btn btn-primary btn-filled btn-xs" href="../" >返回首页</a></span>
+				<span class="btn btn-success btn-filled btn-xs"><a class="btn btn-success btn-filled btn-xs" href="../" >返回首页</a></span>
 	    </div>
   		</div>
   		</div>

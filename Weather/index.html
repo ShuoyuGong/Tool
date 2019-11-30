@@ -8,11 +8,36 @@
 	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=qjesTeDVm2N2GCISSfOIGogrqquhOkGl"></script>
     <title>根据地区获得气象信息</title>
     <link rel="stylesheet" href="../dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../dist/css/animate.css">
 </head>
-<body style="background-color:rgba(236, 230, 230, 0.548);">
+<body style="background-color:rgba(245, 245, 245, 0.774);">
+    <header class="animated bounceInDown fast"> <!--delay-5s -->
+        <div class="collapse bg-transparent" id="navbarHeader">
+            <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-md-7 py-4">
+                <h4 class="text-black"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">关于</font></font></h4>
+                <p class="text-muted">API接口开发，实时状态查询</p>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="navbar navbar-dark badge-primary shadow-sm">
+            <div class="container d-flex justify-content-between">
+            <a href="../index.html" class="navbar-brand d-flex align-items-center">
+                <img src="../index_img/tools.png" class="img-fluid mr-2">
+                <strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Everything(TOOLS)</font></font></strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="切换导航">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            </div>
+        </div>
+    </header>
+
     <header>
         <!-- 顶部logo展示 -->
-        <div class="container">
+        <div class="container animated delay-0.3s bounce fast">
             <div class="row">
                 <div class="col-12 text-center" style="vertical-align: middle;">
                     <img src="img/weatherLogo.png" style="width:5%; vertical-align:inherit;">
@@ -23,7 +48,7 @@
     </header>
     <!-- 创建查询N天的select -->
     <section>
-        <div class="container">
+        <div class="container animated delay-0.5s bounceInDown slow">
             <div class="row">
                 <div class="col-6 text-right">
                     <select class="dropdown col-lg-5 col-md-7 mt-2"  style="vertical-align: middle;"id = "weatherForecastDay">
@@ -47,9 +72,9 @@
     <!-- Echarts jumbotron-fluid-->
     <section id="Echarts_Info">
         <!-- 折线图表信息 -->
-        <div class="col-8 ml-5 " id="main" style="height: 50%;display: inline-block;"></div>
+        <div class="col-8 ml-5 animated delay-0.2s fadeInleft slow" id="main" style="height: 50%;display: inline-block;"></div>
         <!-- 查询地区基本信息 -->
-            <div class="col-3 mr-3" style="height: 53%;display: inline-block;float: right;">
+            <div class="col-3 mr-3 animated delay-0.2s fadeInRight slow" style="height: 53%;display: inline-block;float: right;">
                 <!-- 地区名*日夜间气温值 -->
                 <div class="col-11 text-center" style="margin-left: 15px;">
                     <div class="row" style="overflow: hidden;">
@@ -90,7 +115,7 @@
     </section>
 
     <!-- 地图展示 -->
-    <div id="allmap" class="col-12"></div>	
+    <div id="allmap" class="col-12 animated delay-0.2s fadeInUp slow"></div>	
 
 
 

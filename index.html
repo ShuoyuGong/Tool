@@ -6,13 +6,14 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.5">
-    <title>TOOLS/INDEX</title>
+    <title>Everything(TOOLS)</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
 
     <!-- Bootstrap core CSS -->
     <link href="./index_files/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="dist/css/animate.css">
 
     <style>
       .bd-placeholder-img {
@@ -34,7 +35,7 @@
     <link href="./index_files/album.css" rel="stylesheet">
   <link type="text/css" rel="stylesheet" charset="UTF-8" href="./index_files/translateelement.css"></head>
   <body>
-    <header>
+    <header class="animated bounceInDown fast"> <!--delay-5s -->
         <div class="collapse bg-transparent" id="navbarHeader">
             <div class="container">
             <div class="row">
@@ -49,47 +50,18 @@
             <div class="container d-flex justify-content-between">
             <a href="#" class="navbar-brand d-flex align-items-center">
                 <img src="index_img/tools.png" class="img-fluid mr-2">
-                <strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">TOOLS</font></font></strong>
+                <strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Everything(TOOLS)</font></font></strong>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="切换导航">
                 <span class="navbar-toggler-icon"></span>
             </button>
             </div>
         </div>
-</header>
+    </header>
 
     <!-- ************************************************1 ROWS*********************************************** -->
     <div class="row justify-content-around mt-5">
-        <div class="card d-flex col-xm-12 col-sm-12 col-md-3 al2gn-content-stretch" >
-            <img src="index_img/weather.jfif" class="card-img-top" style="height: 15rem;">
-            <div class="card-body text-center text-center">
-                <h4 class="card-title">天气预报查询</h4>
-                <p class="card-text text-muted">可在地图选择城市<br>可选择24小时天气预报<br>可选择14天天气预报<br>可选择7天天气预报</p>
-                <a href="Weather/index.html" class="btn btn-outline-primary col-10">GO！！！</a>
-            </div>
-        </div>
-
-        <div class="card d-flex col-xm-12 col-sm-12 col-md-3 align-content-stretch" > 
-            <img src="index_img/ems.jfif" class="card-img-top" alt="...">
-            <div class="card-body text-center">
-                <h4 class="card-title">快递信息查询</h4>
-                <p class="card-text  text-muted">根据快递单号跟踪进度<br>支持千家快递公司</p>
-                <a href="EMS/index.html" class="btn btn-outline-primary col-10">GO！！！</a>
-            </div>
-        </div>
-
-        <div class="card d-flex col-xm-12 col-sm-12 col-md-3 align-content-stretch" >
-            <img src="index_img/translation.jfif" class="card-img-top" alt="...">
-            <div class="card-body text-center">
-                <h4 class="card-title">实时翻译</h4>
-                <p class="card-text text-muted">方便快捷<br>实时在线翻译<br>支持多种语言<br></p>
-                <a href="Translation/index.html" class="btn btn-outline-primary col-10">GO！！！</a>
-            </div>
-        </div>
-    </div>
-    <!-- ************************************************2 ROWS*********************************************** -->
-    <div class="row justify-content-around mt-5">
-        <div class="card d-flex col-xm-12 col-sm-12 col-md-3 align-content-stretch" >
+        <div class="card d-flex col-xm-12 col-sm-12 col-md-3 align-content-stretch animated fadeInLeft fast" >
             <img src="index_img/OCRLogo.jpg" class="card-img-top" alt="...">
             <div class="card-body text-center">
                 <h4 class="card-title">OCR文字识别</h4>
@@ -98,7 +70,7 @@
             </div>
         </div>
 
-        <div class="card d-flex col-xm-12 col-sm-12 col-md-3 align-content-stretch" >
+        <div class="card d-flex col-xm-12 col-sm-12 col-md-3 align-content-stretch animated fadeInDownBig fast" >
             <img src="index_img/faceId.jpg" class="card-img-top" alt="...">
             <div class="card-body text-center">
                 <h4 class="card-title">人脸识别</h4>
@@ -107,7 +79,7 @@
             </div>
         </div>
 
-        <div class="card d-flex col-xm-12 col-sm-12 col-md-3 align-content-stretch" >
+        <div class="card d-flex col-xm-12 col-sm-12 col-md-3 align-content-stretch animated fadeInRight fast" >
             <img src="index_img/imgSearch.jpg" class="card-img-top" alt="...">
             <div class="card-body text-center">
                 <h4 class="card-title">图像识别/分析</h4>
@@ -117,9 +89,41 @@
         </div>
     </div>
 
+
+
+    <!-- ************************************************2 ROWS*********************************************** -->
+    <div class="row justify-content-around mt-5">
+        <div class="card d-flex col-xm-12 col-sm-12 col-md-3 al2gn-content-stretch animated fadeInLeft fast" >
+            <img src="index_img/weather.jfif" class="card-img-top" style="height: 15rem;">
+            <div class="card-body text-center text-center">
+                <h4 class="card-title">天气预报查询</h4>
+                <p class="card-text text-muted">可在地图选择城市<br>可选择24小时天气预报<br>可选择14天天气预报<br>可选择7天天气预报</p>
+                <a href="Weather/index.html" class="btn btn-outline-primary col-10">GO！！！</a>
+            </div>
+        </div>
+
+        <div class="card d-flex col-xm-12 col-sm-12 col-md-3 align-content-stretch animated fadeInDownBig fast" > 
+            <img src="index_img/ems.jfif" class="card-img-top" alt="...">
+            <div class="card-body text-center">
+                <h4 class="card-title">快递信息查询</h4>
+                <p class="card-text  text-muted">根据快递单号跟踪进度<br>支持千家快递公司</p>
+                <a href="EMS/index.html" class="btn btn-outline-primary col-10">GO！！！</a>
+            </div>
+        </div>
+
+        <div class="card d-flex col-xm-12 col-sm-12 col-md-3 align-content-stretch animated fadeInRight fast" >
+            <img src="index_img/translation.jfif" class="card-img-top" alt="...">
+            <div class="card-body text-center">
+                <h4 class="card-title">实时翻译</h4>
+                <p class="card-text text-muted">方便快捷<br>实时在线翻译<br>支持多种语言<br></p>
+                <a href="Translation/index.html" class="btn btn-outline-primary col-10">GO！！！</a>
+            </div>
+        </div>
+    </div>
+    
     <!-- ************************************************3 ROWS*********************************************** -->
     <div class="row justify-content-around mt-5">
-            <div class="card d-flex col-xm-12 col-sm-12 col-md-3 align-content-stretch" >
+            <div class="card d-flex col-xm-12 col-sm-12 col-md-3 align-content-stretch animated fadeInLeft fast" >
                 <img src="index_img/IDCard.jfif" class="card-img-top" style="height: 18rem;">
                 <div class="card-body text-center">
                     <h4 class="card-title">身份证信息查询</h4>
@@ -128,7 +132,7 @@
                 </div>
             </div>
     
-            <div class="card d-flex col-xm-12 col-sm-12 col-md-3 align-content-stretch" >
+            <div class="card d-flex col-xm-12 col-sm-12 col-md-3 align-content-stretch animated fadeInDownBig fast" >
                 <img src="index_img/IP.jpg" class="card-img-top" alt="...">
                 <div class="card-body text-center">
                     <h4 class="card-title">IP地址查询</h4>
@@ -137,7 +141,7 @@
                 </div>
             </div>
     
-            <div class="card d-flex col-xm-12 col-sm-12 col-md-3 align-content-stretch" >
+            <div class="card d-flex col-xm-12 col-sm-12 col-md-3 align-content-stretch animated fadeInRight fast" >
                 <img src="index_img/mandarin.jfif" class="card-img-top" alt="...">
                 <div class="card-body text-center">
                     <h4 class="card-title">普通话证书查询</h4>
@@ -148,7 +152,7 @@
         </div>
         <!-- ************************************************4 ROWS*********************************************** -->
         <div class="row justify-content-around mt-5">
-                <div class="card d-flex col-xm-12 col-sm-12 col-md-3 align-content-stretch" >
+                <div class="card d-flex col-xm-12 col-sm-12 col-md-3 align-content-stretch animated fadeInLeft fast" >
                     <img src="index_img/money.jfif" class="card-img-top" alt="...">
                     <div class="card-body text-center">
                         <h4 class="card-title">货币兑换查询</h4>
@@ -157,7 +161,7 @@
                     </div>
                 </div>
         
-                <div class="card d-flex col-xm-12 col-sm-12 col-md-3 align-content-stretch" >
+                <div class="card d-flex col-xm-12 col-sm-12 col-md-3 align-content-stretch animated fadeInDownBig fast" >
                     <img src="index_img/phoneNum.jfif" class="card-img-top" alt="...">
                     <div class="card-body text-center">
                         <h4 class="card-title">号码归属地查询</h4>
@@ -166,15 +170,40 @@
                     </div>
                 </div>
         
-                <div class="card d-flex col-xm-12 col-sm-12 col-md-3 align-content-stretch" >
-                    <img src="index_img/spiritualComfort.jfif" class="card-img-top" alt="...">
+                <div class="card d-flex col-xm-12 col-sm-12 col-md-3 align-content-stretch animated fadeInRight fast" >
+                    <img src="index_img/pm2.5.png" class="card-img-top" alt="...">
                     <div class="card-body text-center">
-                        <h4 class="card-title">心灵鸡汤</h4>
-                        <p class="card-text text-muted">心灵<br>治愈系<br>在线毒汤文</p>
-                        <a href="spiritualComfort/index.php" class="btn btn-outline-primary col-10">GO！！！</a>
+                        <h4 class="card-title">空气质量查询</h4>
+                        <p class="card-text text-muted">根据用户输入地区<br>查询当地PM2.5含量<br>及其它空气元素含量</p>
+                        <a href="PM2.5/" class="btn btn-outline-primary col-10">GO！！！</a>
                     </div>
                 </div>
             </div>
+
+        <!-- ************************************************5 ROWS*********************************************** -->
+        <div class="row justify-content-around mt-5">
+            <div class="card d-flex col-xm-12 col-sm-12 col-md-3 align-content-stretch animated fadeInLeft fast" >
+                <img src="index_img/mercenary.jpg" class="card-img-top" alt="...">
+                <div class="card-body text-center">
+                    <h4 class="card-title">雇佣兵合同生成</h4>
+                    <p class="card-text text-muted">用户输入姓名<br>用户输入年限<br>生成合同</p>
+                    <a href="mercenary/index.php" class="btn btn-outline-primary col-10">GO！！！</a>
+                </div>
+            </div>
+    
+            <div class="card d-flex col-xm-12 col-sm-12 col-md-3 align-content-stretch animated fadeInDownBig fast" >
+                <img src="index_img/zan.jpg" class="card-img-top" alt="...">
+            </div>
+    
+            <div class="card d-flex col-xm-12 col-sm-12 col-md-3 align-content-stretch animated fadeInRight fast" >
+                <img src="index_img/spiritualComfort.jfif" class="card-img-top" alt="...">
+                <div class="card-body text-center">
+                    <h4 class="card-title">心灵鸡汤</h4>
+                    <p class="card-text text-muted">心灵<br>治愈系<br>在线毒汤文</p>
+                    <a href="spiritualComfort/index.php" class="btn btn-outline-primary col-10">GO！！！</a>
+                </div>
+            </div>
+        </div>
             
 
 

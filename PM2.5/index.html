@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>空气质量检测</title>
+		<link rel="stylesheet" href="../dist/css/bootstrap.css">
+		<link rel="stylesheet" href="../dist/css/animate.css">
+		<style type="text/css">
+			body{
+				background-color:rgba(245, 245, 245, 0.774);
+			}
+			span{
+				position: absolute;
+				color: white;
+				width: 600px;
+			}
+
+			#box{
+				margin-top: 10px;
+				width: 1000px;
+				height: 500px;
+				display: none;
+				margin-left: 50px;
+			}
+			#box1{
+				width: 1000px;
+				height: 250px;
+				background-color: #7791ac;
+				border-radius: 8px 8px 0 0;
+				
+			}
+			#box2{
+				width: 1000px;
+				height: 250px;
+				background-color: #6e879f;
+				border-radius: 0 0 8px 8px;
+			}
+			#box3{
+				width: 550px;
+				height: 500px;
+				margin-top: 10px;
+				background-color: #6e879f;
+				border-radius: 8px 8px 8px 8px;
+				display: none;
+				position: absolute;
+				top: 22%;
+				left: 61%;
+			}
+			/*要查询的城市*/
+			#cs{
+				
+				margin-top: 40px;
+				margin-left: 20px;
+				font-size: 30px;
+			}
+			/*pm2.5指数*/
+			#PM{
+				
+				font-size: 95px;
+				margin-top: 100px;
+				margin-left: 50px;
+			}
+			/*污染程度*/
+			#wr{
+				text-align: center;
+				margin-top: 100px;
+				margin-left: 200px;
+				width: 70px;
+				height: 25px;
+				border-radius: 5px;
+			}
+			/*温馨提示*/
+			#ts{
+				margin-top: 140px;
+				margin-left: 210px;
+				
+			}
+			#time{
+				margin-top: 80px;
+				margin-left: 30px;
+				font-size: 20px;
+			}
+			/*o3*/
+			#o3{
+				float: left;
+				width: 200px;
+				height: 250px;
+			}
+			#o3z{
+				margin-top: 55px;
+				margin-left: 40px;
+				font-size: 100px;
+			}
+			/*o3指数*/
+			#o3zs{
+				
+				width: 70px;
+				height: 25px;
+				text-align: center;
+				border-radius: 5px;
+				margin-top: 185px;
+				margin-left: 60px;
+			/*co*/
+			}
+			#co{
+				float: left;
+				width: 200px;
+				height: 250px;
+			}
+			#coz{
+				margin-top: 55px;
+				margin-left: 35px;
+				font-size: 100px;
+			}
+			/*co指数*/
+			#cozs{
+				width: 70px;
+				height: 25px;
+				text-align: center;
+				border-radius: 5px;
+				margin-top: 185px;
+				margin-left: 60px;
+			}
+			/*no2*/
+			#no2{
+				float: left;
+				width: 200px;
+				height: 250px;
+			}
+			#no2z{
+				margin-top: 55px;
+				margin-left: 40px;
+				font-size: 100px;
+			}
+			/*no2指数*/
+			#no2zs{
+				width: 70px;
+				height: 25px;
+				text-align: center;
+				border-radius: 5px;
+				margin-top: 185px;
+				margin-left: 60px;
+			}
+			/*pm10*/
+			#pm10{
+				float: left;
+				width: 190px;
+				height: 250px;
+			}
+			#pm10z{
+				margin-top: 55px;
+				margin-left: 40px;
+				font-size: 100px;
+			}
+			/*pm10指数*/
+			#pm10zs{
+				width: 70px;
+				height: 25px;
+				text-align: center;
+				border-radius: 5px;
+				margin-top: 185px;
+				margin-left: 60px;
+			}
+			
+			/*pm2*/
+			#pm2{
+				float: left;
+				width: 190px;
+				height: 250px;
+			}
+			#pm2z{
+				margin-top: 55px;
+				margin-left: 40px;
+				font-size: 100px;
+			}
+			/*pm10指数*/
+			#pm2zs{
+				width: 70px;
+				height: 25px;
+				text-align: center;
+				border-radius: 5px;
+				margin-top: 185px;
+				margin-left: 60px;
+			}
+			
+			#box3z{
+				font-size: 25px;
+				margin-top: 15px;
+				margin-left: 15px;
+			}
+			/*统计图*/
+			#main{
+				position: absolute;
+				margin-left:280px;
+				width: 250px;
+				height: 500px;
+			}
+		</style>
+	</head>
+	<body>
+	<header class="animated bounceInDown fast"> <!--delay-5s -->
+        <div class="collapse bg-transparent" id="navbarHeader">
+            <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-md-7 py-4">
+                <h4 class="text-black"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">关于</font></font></h4>
+                <p class="text-muted">API接口开发，实时状态查询</p>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="navbar navbar-dark badge-primary shadow-sm">
+            <div class="container d-flex justify-content-between">
+            <a href="../index.html" class="navbar-brand d-flex align-items-center">
+                <img src="../index_img/tools.png" class="img-fluid mr-2">
+                <strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Everything(TOOLS)</font></font></strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="切换导航">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            </div>
+        </div>
+    </header>
+
+
+<!-- expressLogo -->
+<header>
+	<div class="container animated delay-0.3s bounce fast">
+		<div class="row">
+			<div class="col-12 text-center" style="vertical-align: middle;">
+				<img src="imgs/logo.png" style="width: 5%; vertical-align:inherit;">
+				<p class="d-inline-block text-info ml-2" style="vertical-align:inherit;font-size: 3rem;">空气质量查询</p>
+			</div>
+		</div>
+	</div>
+</header>
+
+<!-- 用户输入组 -->
+<div class="row col-12 animated delay-0.5s bounceInDown slow">
+	<div class="input-group mb-3 col-10 offset-2">
+		<input type="text" id="city" class="form-control  col-8" placeholder="请输入要查询的城市" aria-label="Example text with button addon" aria-describedby="button-addon1">
+		<div class="input-group-prepend  col-2">
+			<button class="btn btn-outline-primary  col-12" type="button" id="btn">查询</button>
+		</div>
+	</div>
+</div>
+		<div id="box">
+			<div id="box1">
+				<span id="cs"></span>
+				<span id="time"></span>
+				<span id="PM"></span>
+				<span id="wr"></span>
+				<span id="ts"></span>
+			</div>
+			<span>其他危害物</span>
+			<!--其他空气值-->
+			<div id="box2">
+				<div id="o3">
+					<span style="margin-left: 55px; font-size: 20px;margin-top: 25px;">o3(臭氧)</span>
+					<span id="o3z"></span>
+					<span id="o3zs"></span>
+				</div>
+				<div id="co">
+					<span style="margin-left: 35px; font-size: 20px;margin-top: 25px;">co(一氧化碳)</span>
+					<span id="coz"></span>
+					<span id="cozs"></span>
+				</div>
+				<div id="no2">
+					<span style="margin-left: 35px; font-size: 20px;margin-top: 25px;">no2(二氧化氮)</span>
+					<span id="no2z"></span>
+					<span id="no2zs"></span>
+				</div>
+				<div id="pm10">
+					<span style="margin-left: 35px; font-size: 20px;margin-top: 25px;">pm10(颗粒物)</span>
+					<span id="pm10z"></span>
+					<span id="pm10zs"></span>
+				</div>
+				<div id="pm2">
+					<span style="margin-left: 35px; font-size: 20px;margin-top: 25px;">pm2.5(颗粒物)</span>
+					<span id="pm2z"></span>
+					<span id="pm2zs"></span>
+				</div>
+			</div>
+		</div>
+		<div id="box3">
+			<span id="box3z"></span>
+			<div id="main"></div>
+			<span id="wh" style="width: 250px; margin-top: 75px; margin-left: 20px; font-size: 1.2rem;"></span>
+		</div>
+		
+
+
+		<script src="../dist/js/echarts.js"></script>
+		<script src="../dist/js/jquery-3.3.1.js"></script>
+		<script type="text/javascript">
+		btn.onclick = function(){
+			var city = $("#city").val();
+			if(!(city == ""||city==null||city==undefined)){
+				$("#box").css("display","block");
+				$.ajax({
+					type:"post",
+					url:"PM2.5.php",
+					data:{'city':city},
+					success:function(res){
+						//截取字符串
+						var str = res.substring(res.indexOf('{'));
+						
+						//去除多余空格
+						str = str.replace(/\s*/g,"");
+						
+						//数组转化为对象
+						const strToObj = JSON.parse(str);
+
+						//对象转化为数组
+						var arr = [];
+						for (let i in strToObj){
+							let o = {};
+							o[i] = strToObj[i];
+							arr.push(o);
+						}
+						console.log(arr);
+						//获取城市
+						$("#cs").text(city);
+						//获取时间
+						var time = arr[3]["showapi_res_body"]["pm"]["ct"];
+						var time = time.substring(0,time.indexOf("-")+6);
+						$("#time").text(time);
+						//获取PM2.5值
+						var pm = arr[3]["showapi_res_body"]["pm"]["aqi"];
+						$("#PM").text(pm);
+						//获取污染指数
+						var wr = arr[3]["showapi_res_body"]["pm"]["quality"];
+						var pp=$("#wr").text(wr);
+						if(wr == "优质" || wr == "良好"){
+							$("#wr").css("background-color","#008800");
+							$("#ts").text("温馨提示:空气质量令人满意，基本无空气污染，对健康没有危害,各类人群可参加户外活动");
+						}else if(wr == "轻度污染" || wr == "中度污染"){
+							$("#wr").css("background-color","orangered");
+							$("#ts").text("温馨提示 : 敏感人群症状易加剧，可能对健康人群的心脏、呼吸系统有影响，外出时做好防护措施");
+						}else if(wr == "重度污染" || wr == "严重污染"){
+							$("#wr").css("background-color","red");
+							$("#ts").text("温馨提示 : 空气状况极差，所有人的健康都会受到严重危害,除有特殊需要的人群外，一般人群尽量不要停留在室外");
+						}
+						
+						
+						//获取o3(臭氧)
+						var o3 = arr[3]["showapi_res_body"]["pm"]["o3"];
+						$("#o3z").text(o3);
+						if(o3 < 50){
+							$("#o3zs").text("优质");
+							$("#o3zs").css("background-color","green");
+						}else if(o3 >50 && o3<100){
+							$("#o3zs").text("良");
+							$("#o3zs").css("background-color","greenyellow");
+						}else if(o3 >100 && o3<200){
+							$("#o3zs").text("中度污染");
+							$("#o3zs").css("background-color","orangered");
+						}else if(o3 >200 && o3<300){
+							$("#o3zs").text("严重污染");
+							$("#o3zs").css("background-color","brown");
+						}else if(o3 >300 && o3<500){
+							$("#o3zs").text("危险");
+							$("#o3zs").css("background-color","red");
+						}
+						//臭氧危害
+						$("#o3").mouseover(function(){
+							$("#box3").css("display","block");
+							$("#box3z").text("o3(臭氧)");
+							$("#wh").text("国际环境空气质量标准提出，人在一个小时内可接受臭氧的极限浓度是260μg/m3。 在320μg/m3臭氧环境中活动1h就会引起咳嗽、呼吸困难及肺功能下降。臭氧还能参与生物体中的不饱和脂肪酸、氨基及其他蛋白质反应，使长时间直接接触高浓度臭氧的人出现疲乏、咳嗽、胸闷胸痛、皮肤起皱、恶心头痛、脉搏加速、记忆力衰退、视力下降等症状");
+							var main = document.getElementById("main");
+							var myecharts = echarts.init(main);
+							var option={
+								xAxis:{data:["优质","良","中度污染","严重污染","危险",city]},
+								yAxis:{},
+								series:[{
+								type:"bar",
+								data:[50,100,200,300,500,o3],
+								}]
+							};
+							myecharts.setOption(option);
+						})
+						$("#o3").mouseout(function(){
+							$("#box3").css("display","none");
+						})
+						
+						
+						//获取co(一氧化碳)
+						var co = arr[3]["showapi_res_body"]["pm"]["co"];
+						$("#coz").text(co);
+						if(co<1){
+							$("#cozs").text("正常");
+							$("#cozs").css("background-color","green");
+						}else if(co>1){
+							$("#cozs").text("超标");
+							$("#cozs").css("background-color","red");
+						}
+						//一氧化碳危害
+						$("#co").mouseover(function(){
+							$("#box3").css("display","block");
+							$("#box3z").text("co(一氧化碳)");
+							$("#wh").text("轻度中毒表现为头痛、头昏、四肢无力、恶心呕吐、轻度意识障碍等；中度中毒表现为浅至中度昏迷；重度中毒意识障碍达深昏迷或去大脑皮层状态，如CO浓度极高时，可使人迅速昏迷，甚至“电击样”死亡。除中枢神经系统病变之外，急性CO中毒尚可合并多器官功能障碍，如肺水肿，呼吸衰竭，上消化道出血，休克，周围神经病变（多为单神经损害），皮肤水疱或红肿，身体挤压综合征");
+							var main = document.getElementById("main");
+							var myecharts = echarts.init(main);
+							var option={
+								xAxis:{data:["安全值",city]},
+								yAxis:{},
+								series:[{
+								type:"bar",
+								show:true,
+								data:[1,co],
+								}]
+							};
+							myecharts.setOption(option);
+						})
+						$("#co").mouseout(function(){
+							$("#box3").css("display","none");
+						})
+						
+						
+						//获取no2(二氧化氮)
+						var no2 = arr[3]["showapi_res_body"]["pm"]["no2"];
+						$("#no2z").text(no2);
+						if(no2<200){
+							$("#no2zs").text("正常");
+							$("#no2zs").css("background-color","green");
+						}else if(no2>200){
+							$("#no2zs").text("超标");
+							$("#no2zs").css("background-color","red");
+						}
+						//二氧化氮危害
+						$("#no2").mouseover(function(){
+							$("#box3").css("display","block");
+							$("#box3z").text("no2(二氧化氮)");
+							$("#wh").text("氮氧化物主要损害呼吸道。吸入初期仅有轻微的眼及上呼吸道刺激症状，如咽部不适、干咳等。常数小时至十几小时或更长时间潜伏期后发生迟发性肺水肿、成人呼吸窘迫综合征，出现胸闷、呼吸窘迫、咳嗽、咯泡沫痰、紫绀等。可并发气胸及纵隔气肿。肺水肿消退后两周左右可出现迟发性阻塞性细支气管炎");
+							var main = document.getElementById("main");
+							var myecharts = echarts.init(main);
+							var option={
+								xAxis:{data:["安全值",city]},
+								yAxis:{},
+								series:[{
+								type:"bar",
+								data:[200,no2],
+								}]
+							};
+							myecharts.setOption(option);
+						})
+						$("#no2").mouseout(function(){
+							$("#box3").css("display","none");
+						})
+						
+						
+						//获取pm10(直径大于10的颗粒物)
+						var pm10 = arr[3]["showapi_res_body"]["pm"]["pm10"];
+						$("#pm10z").text(pm10);
+						if(pm10<50){
+							$("#pm10zs").text("一级标准");
+							$("#pm10zs").css("background-color","green");
+						}else if(pm10>50){
+							$("#pm10zs").text("二级标准");
+							$("#pm10zs").css("background-color","greenyellow");
+						}
+						//pm10危害
+						$("#pm10").mouseover(function(){
+							$("#box3").css("display","block");
+							$("#box3z").text("pm10");
+							$("#wh").text("可吸入肺泡,这些颗粒物在肺泡上沉积下来，损伤肺泡和粘膜，引起肺组织的慢性纤维化，导致肺心病，加重哮喘病，引起慢性鼻咽炎、慢性支气管炎等一系列病变，严重的可 危及生命。颗粒物对儿童和老年人的危害尤为明显,PM10内含有各种直接致突变物和间接致突变物，可以损害遗传物质和干扰细胞正常分裂，同时破坏机体的免疫监视，而引起癌症和畸形.");
+							var main = document.getElementById("main");
+							var myecharts = echarts.init(main);
+							var option={
+								xAxis:{data:["50以上为二级以下为一级",city]},
+								yAxis:{},
+								series:[{
+								type:"bar",
+								data:[50,pm10],
+								}]
+							};
+							myecharts.setOption(option);
+						})
+						$("#pm10").mouseout(function(){
+							$("#box3").css("display","none");
+						})
+						
+						
+						//获取pm2.5
+						var pm2 = arr[3]["showapi_res_body"]["pm"]["pm2_5"];
+						$("#pm2z").text(pm2);
+						if(pm2 < 35){
+							$("#pm2zs").text("优质");
+							$("#pm2zs").css("background-color","green");
+						}else if(pm2 >35 && o3<75){
+							$("#pm2zs").text("良");
+							$("#pm2zs").css("background-color","greenyellow");
+						}else if(pm2 >75 && o3<115){
+							$("#pm2zs").text("轻度污染");
+							$("#pm2zs").css("background-color","orangered");
+						}else if(o3 >115 && o3<150){
+							$("#pm2zs").text("中度污染");
+							$("#pm2zs").css("background-color","brown");
+						}else if(pm2 >150 && o3<250){
+							$("#o3zs").text("重度污染");
+							$("#o3zs").css("background-color","red");
+						}else if(pm2 >250){
+							$("#o3zs").text("严重污染");
+							$("#o3zs").css("background-color","#780909");
+						}
+						
+						//pm2_5危害
+						$("#pm2").mouseover(function(){
+							$("#box3").css("display","block");
+							$("#box3z").text("pm2.5");
+							$("#wh").text("细颗粒物对人体健康的危害要更大，因为直径越小，进入呼吸道的部位越深。10μm直径的颗粒物通常沉积在上呼吸道，2μm以下的可深入到细支气管和肺泡。细颗粒物进入人体到肺泡后，直接影响肺的通气功能，使机体容易处在缺氧状态,对颗粒的长期暴露可引发心血管病和呼吸道疾病以及肺癌,PM2.5极易吸附多环芳烃等有机污染物和重金属，使致癌、致畸、致突变的机率明显升高.");
+							var main = document.getElementById("main");
+							var myecharts = echarts.init(main);
+							var option={
+								xAxis:{data:["优质","良","轻度污染","中度污染","重度污染",city]},
+								yAxis:{},
+								series:[{
+								type:"bar",
+								data:[35,75,115,150,250,pm10],
+								}]
+							};
+							myecharts.setOption(option);
+						})
+						$("#pm2").mouseout(function(){
+							$("#box3").css("display","none");
+						})
+					}
+				})
+			}else{
+				alert("不能为空");
+			}
+		}
+		</script>
+	</body>
+</html>

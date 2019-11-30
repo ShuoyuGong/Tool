@@ -4,11 +4,40 @@
 	<meta charset="utf-8">
 	<title>普通话证书查询</title>
 	<link rel="stylesheet" href="../dist/css/bootstrap.css">
+	<link rel="stylesheet" href="../dist/css/animate.css">
+	<style>
+		body{
+            background-color:rgba(245, 245, 245, 0.774);
+        }
+	</style>
 </head>
 <body>
+        <div class="collapse bg-transparent" id="navbarHeader">
+            <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-md-7 py-4">
+                <h4 class="text-black"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">关于</font></font></h4>
+                <p class="text-muted">API接口开发，实时状态查询</p>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="navbar navbar-dark badge-primary shadow-sm">
+            <div class="container d-flex justify-content-between">
+            <a href="../index.html" class="navbar-brand d-flex align-items-center">
+                <img src="../index_img/tools.png" class="img-fluid mr-2">
+                <strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Everything(TOOLS)</font></font></strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="切换导航">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            </div>
+        </div>
+    </header>
+
 	<!--logo -->
 	<header>
-		<div class="container">
+		<div class="container animated delay-0.3s bounce fast">
 			<div class="row">
 				<div class="col-12 text-center" style="vertical-align: middle;">
 					<img src="img/ChinaLanguageLogo.png" style="width: 5%; vertical-align:inherit;">
@@ -22,21 +51,20 @@
 		<div class="container">
 			<div class="row ">
 				<!-- 姓名 -->
-				<div class="input-group mb-3 col-6 offset-3 ">
-					<input type="text" id="username" class="form-control" placeholder="请输入您的姓名" aria-label="请输入您的姓名" aria-describedby="button-addon2">
-					
+				<div class="input-group mb-3 col-6 offset-3 animated delay-0.3s fadeInLeft fast">
+					<input type="text" id="username" class="form-control" placeholder="请输入您的姓名" aria-label="请输入您的姓名" aria-describedby="button-addon2" value = "龚烁宇">
 				</div>
 				<!-- 身份证信息 -->
-				<div class="input-group mb-3 col-6 offset-3 ">
-					<input type="text" id="Id_num" class="form-control" placeholder="请输入您的身份证号码" aria-label="请输入您的身份证号码" aria-describedby="button-addon2">
+				<div class="input-group mb-3 col-6 offset-3 animated delay-0.3s fadeInRight fast">
+					<input type="text" id="Id_num" class="form-control" placeholder="请输入您的身份证号码" aria-label="请输入您的身份证号码" aria-describedby="button-addon2" value = "410322200001299858">
 				</div>
 				<!-- 证书编号 -->
-				<div class="input-group mb-3 col-6 offset-3 ">
-					<input type="text" id="certificate" class="form-control" placeholder="请输入您的证书编号" aria-label="请输入您的证书编号" aria-describedby="button-addon2">
+				<div class="input-group mb-3 col-6 offset-3 animated delay-0.3s fadeInLeft fast">
+					<input type="text" id="certificate" class="form-control" placeholder="请输入您的证书编号" aria-label="请输入您的证书编号" aria-describedby="button-addon2" value = "4119138003537">
 				</div>
 			</div>
 			<!-- 查询按钮 -->
-			<div class="row">
+			<div class="row animated delay-0.3s fadeInRight fast">
 				<button class="btn btn-outline-primary col-6 offset-3" type="button" id="searchBtn">查询</button>
 			</div>
 
