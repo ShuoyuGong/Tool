@@ -147,7 +147,7 @@
 					type:'post',
 					data:{"sourceMoney":sourceMoney,"targetMoney":targetMoney,"originalText":originalText},
 					success:function(res){
-						console.log(res);
+						// console.log(res);
 						//截取从"{"开始直至结束
 						var str=res.substring(res.indexOf('{'));
 						//console.log(str);
@@ -164,7 +164,7 @@
 							o[i]=strToObj[i];
 							arr.push(o)
 						}
-						console.log(arr);
+						// console.log(arr);
 
 						var targetMoney=arr[3]["showapi_res_body"]["money"];
 						//console.log(targetMoney);
@@ -172,7 +172,7 @@
 					}
 				})
 			}else{
-				alert("源语言文本框不能为空");
+				alert("源货币文本框不能为空");
 			}
 		})
 	</script>
