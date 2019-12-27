@@ -85,6 +85,7 @@
 					<img src="img/currencyConversion.png" style="width:3%;vertical-align: middle;" class="ml-5 mr-5">
 					<!--目标语言列表-->
 					<select class="dropdown col-lg-3 col-md-4 col-sm-3" style="vertical-align: middle;" id="targetMoney">
+						<option value="EUR" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">欧元</option>
 						<option value="CNY" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">人民币</option>
 						<option value="IDR" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">印尼卢比</option>
 						<option value="NZD" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">新西兰元</option>
@@ -96,7 +97,6 @@
 						<option value="PHP" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">菲律宾比索</option>
 						<option value="HKD" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">港币</option>
 						<option value="MYR" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">林吉特</option>
-						<option value="EUR" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">欧元</option>
 						<option value="INR" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">印度卢比</option>
 						<option value="DKK" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">丹麦克朗</option>
 						<option value="CAD" class=" source_Money dropdown-item  col-lg-2 col-sm-6 d-inline-block ">加拿大元</option>
@@ -118,13 +118,13 @@
 				</div>
 			</div>
 			<div class="row mt-3 text-center">
-				<!-- 源语言文本 -->
-				<div class="text-center col-6">
-					<input id="originalText" class="col-12 border-info mb-3 rounded animated delay-0.5s fadeInLeft slow" style="height: 50px; width:95%;padding: 0.7rem; "></input>
+				<!-- 源货币文本 -->
+				<div class="text-center col-3">
+					<input id="originalText" class="col-12 border-info mb-3 rounded animated delay-0.5s fadeInLeft slow" style="height: 50px; width:95%;padding: 0.7rem;" placeholder="输入您想转换的金额"></input>
 				</div>
-				<!-- 目标语言文本 -->
-				<div class="text-center col-6">
-					<input id="targetText" readonly class="col-12 border-info mb-3 rounded animated delay-0.5s fadeInRight slow" style="height: 50px; width:95%;padding: 0.7rem; background-color: rgba(250, 247, 247, 0.514);"></input>
+				<!-- 目标货币文本 -->
+				<div class="text-center col-9">
+					<input id="targetText" readonly class="col-12 border-info mb-3 rounded animated delay-0.5s fadeInRight slow" style="height: 50px; width:95%;padding: 0.7rem; background-color: rgba(250, 247, 247, 0.514);font-size:1.5rem;font-bold:blod;"></input>
 				</div>
 			</div>
 		</div>
@@ -139,9 +139,11 @@
 			var sourceMoney =  $("#sourceMoney").val();
 			var targetMoney =  $("#targetMoney").val();
 			var originalText = $("#originalText").val();
-			var a = $("#sourceMoney").text();
-			console.log(a);
-			if (originalText !== "") {
+			var sourceMoneyText=$("#sourceMoney option:selected").text();
+			var targetMoneyText=$("#targetMoney option:selected").text(); 
+			console.log(sourceMoneyText,targetMoneyText);
+			var reg = /^[\d]+$/;
+			if (originalText !== "" &&　reg.test(originalText)) {
 				$.ajax({
 					url:'index.php',
 					type:'post',
@@ -168,11 +170,11 @@
 
 						var targetMoney=arr[3]["showapi_res_body"]["money"];
 						//console.log(targetMoney);
-						$("#targetText").val(targetMoney);
+						$("#targetText").val(originalText + sourceMoneyText + "(" + sourceMoney + ")" + "=" + targetMoney + "(" + targetMoneyText + ")");
 					}
 				})
 			}else{
-				alert("源货币文本框不能为空");
+				alert("源货币文本框不能为空|请输入纯数字");
 			}
 		})
 	</script>
