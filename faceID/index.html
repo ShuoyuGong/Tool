@@ -326,7 +326,7 @@
                                 var similarity = Math.floor(arr[5].result.score);//相似度得分
                                 $("#similarity").append("<div class = 'col-12 mt-5 text-muted'>对比结果(相似分0-100，分数越高代表图片中人物越像)</div>");
                                 $("#similarity").append("<div class = 'col-12' style = 'font-size:10rem;'>"+similarity+"</div>");
-                                if(similarity >= 60){
+                                if(similarity >= 70){
                                     $("#similarity").append("<div class = 'col-12' style = 'font-size:2rem;'>根据系统判定，是同一人</div>");
                                 }else{
                                     $("#similarity").append("<div class = 'col-12' style = 'font-size:2rem;'>根据系统判定，不是同一人</div>");

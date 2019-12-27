@@ -248,11 +248,11 @@
 </style>
 
 <script>
-<!--
+
 document.write(unescape("%20%20%3Cscript%20type%3D%22text/javascript%22%3E%0A%09%09function%20handleFiles%28e%29%7B%0A%09%09%09%09console.log%28e%5B0%5D%29%3B%0A%09%09%09%09url%20%3D%20getObjectURL%28e%5B0%5D%29%3B%0A%09%09%09%09qrcode.decode%28url%29%3B%0A%09%09%09%09qrcode.callback%20%3D%20function%28imgMsg%29%7B%0A%09%09%09%09%09%24%28%27%23result%27%29.val%28imgMsg%29%3B%0A%09%09%09%09%7D%0A%09%09%7D%0A%09%09function%20getObjectURL%28file%29%7B%0A%09%09%20%20%20%20let%20url%20%3D%20null%20%3B%20%0A%09%09%20%20%20%20if%20%28window.createObjectURL%21%3Dundefined%29%20%7B%20//%20basic%0A%09%09%20%20%20%20%20%20%20%20url%20%3D%20window.createObjectURL%28file%29%20%3B%0A%09%09%20%20%20%20%7D%20else%20if%20%28window.URL%21%3Dundefined%29%20%7B%20//%20mozilla%28firefox%29%0A%09%09%20%20%20%20%20%20%20%20url%20%3D%20window.URL.createObjectURL%28file%29%20%3B%0A%09%09%20%20%20%20%7D%20else%20if%20%28window.webkitURL%21%3Dundefined%29%20%7B%20//%20webkit%20or%20chrome%0A%09%09%20%20%20%20%20%20%20%20url%20%3D%20window.webkitURL.createObjectURL%28file%29%20%3B%0A%09%09%20%20%20%20%7D%0A%09%09%20%20%20%20return%20url%20%3B%0A%09%09%7D%0A%20%20%3C/script%3E"));
-//-->
-<script src="../dist/js/bootstrap.js"></script>
 </script>
+<script src="../dist/js/bootstrap.js"></script>
+
 <header class="animated bounceInDown fast"> <!--delay-5s -->
         <div class="collapse bg-transparent" id="navbarHeader">
             <div class="container">
