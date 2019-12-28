@@ -1,16 +1,15 @@
 <?php
 	 $certificate =$_POST['certificate'];
-	// echo $certificate;
-	//姓名，如：胡郦芸
+
 	 $username =$_POST['username'] ;
-	// //身份证号，如：440921199011169228
+
 	 $Id_num =$_POST['Id_num'];
-    //API产品路径
+   
     $host = "http://putonghua.market.alicloudapi.com";
     $path = "/icredit_ai_market/putonghua_search/v1";
     $method = "GET";
     //阿里云APPCODE
-    $appcode = "54b29adf2662452eb67b088c87dff451";
+    $appcode = "f820720dbdc9446c889a605053399179";
     $headers = array();
     array_push($headers, "Authorization:APPCODE " . $appcode);
     array_push($headers, "Content-Type:application/json; charset=utf-8");

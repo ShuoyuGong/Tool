@@ -112,7 +112,9 @@
 						type:'post',
 						data:{'username':username,'Id_num':Id_num,'certificate':certificate},
 						success:function(res){
+							// console.log(res);
 							var str = res.substring(res.indexOf('{'));
+							console.log(str);
 							str = str.replace(/\s*/g,"");
 							const strToObj = JSON.parse(str);
 							var arr = []

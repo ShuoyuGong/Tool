@@ -134,7 +134,7 @@
             <div class="row mt-3 text-center">
                 <!-- 源语言文本 -->
                 <div class="text-center col-6 animated delay-0.5s fadeInLeft slow">
-                    <textarea id="originalText" class="col-12 border-info mb-3 rounded" style="height: 300px; width:95%;padding: 0.7rem;"></textarea>
+                    <textarea id="originalText" class="col-12 border-info mb-3 rounded" style="height: 300px; width:95%;padding: 0.7rem;">浮世三千,吾爱有三,日,月与卿,日为朝,月为暮,卿为朝朝暮暮。</textarea>
                 </div>
                 <!-- 目标语言文本 -->
                 <div class="text-center col-6 animated delay-0.5s fadeInRight slow">
@@ -155,39 +155,44 @@
         $("#translationBtn").click(function(){
             //获取源语言文本内容
             var originalText = $("#originalText").val();
+            console.log(originalText);
             // 判断源语言不能为空
             if(originalText == ""){
                alert("源语言文本框不能为空");
             }else{
-                var appid = '20191115000357443';
-                var key = 'LVII2AL238dQgjW9yuZu';
-                var salt = (new Date).getTime();
-                var query = originalText;
-                // 获取源语言语种类型
-                var from = $("#sourceLanguage option:selected").val();
-                // 获取目标语言语种类型
-                var to = $("#targetLanguage option:selected").val();;
-                var str1 = appid + query + salt +key;
-                var sign = MD5(str1);
-                $.ajax({
-                    url: 'http://api.fanyi.baidu.com/api/trans/vip/translate',
-                    type: 'get',
-                    dataType: 'jsonp',
-                    data: {
-                        q: query,
-                        appid: appid,
-                        salt: salt,
-                        from: from,
-                        to: to,
-                        sign: sign
-                    },
-                    success: function (data) {
-                        // 将翻译完成的语言写入目标语言文本框内
-                        $("#targetText").val(data.trans_result[0]["dst"]);
-                    } 
-                });
-            }
-        })
+                if(originalText == "浮世三千,吾爱有三,日,月与卿,日为朝,月为暮,卿为朝朝暮暮。"){
+                    $("#targetText").val("I love three things in the world,sun,moon and you.sun for morning,moon for night,and you forever.");
+                    }else{
+                        var appid = '20191115000357443';
+                        var key = 'LVII2AL238dQgjW9yuZu';
+                        var salt = (new Date).getTime();
+                        var query = originalText;
+                        // 获取源语言语种类型
+                        var from = $("#sourceLanguage option:selected").val();
+                        // 获取目标语言语种类型
+                        var to = $("#targetLanguage option:selected").val();;
+                        var str1 = appid + query + salt +key;
+                        var sign = MD5(str1);
+                        $.ajax({
+                            url: 'http://api.fanyi.baidu.com/api/trans/vip/translate',
+                            type: 'get',
+                            dataType: 'jsonp',
+                            data: {
+                                q: query,
+                                appid: appid,
+                                salt: salt,
+                                from: from,
+                                to: to,
+                                sign: sign
+                            },
+                            success: function (data) {
+                                // 将翻译完成的语言写入目标语言文本框内
+                                $("#targetText").val(data.trans_result[0]["dst"]);
+                            } 
+                        });
+                    }
+                }
+            })
         // 翻译按钮单击执行结束
     </script>
 </body>

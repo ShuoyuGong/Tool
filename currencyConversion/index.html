@@ -137,17 +137,17 @@
 		$("#MoneyBtn").click(function(){
 			// 获取原货币类型
 			var sourceMoney =  $("#sourceMoney").val();
-			var targetMoney =  $("#targetMoney").val();
+			var targetMoneyVal =  $("#targetMoney").val();
 			var originalText = $("#originalText").val();
 			var sourceMoneyText=$("#sourceMoney option:selected").text();
 			var targetMoneyText=$("#targetMoney option:selected").text(); 
-			console.log(sourceMoneyText,targetMoneyText);
+			console.log(sourceMoney,targetMoney,originalText,sourceMoneyText,targetMoneyText);
 			var reg = /^[\d]+$/;
 			if (originalText !== "" &&　reg.test(originalText)) {
 				$.ajax({
 					url:'index.php',
 					type:'post',
-					data:{"sourceMoney":sourceMoney,"targetMoney":targetMoney,"originalText":originalText},
+					data:{"sourceMoney":sourceMoney,"targetMoney":targetMoneyVal,"originalText":originalText},
 					success:function(res){
 						// console.log(res);
 						//截取从"{"开始直至结束
@@ -170,7 +170,7 @@
 
 						var targetMoney=arr[3]["showapi_res_body"]["money"];
 						//console.log(targetMoney);
-						$("#targetText").val(originalText + sourceMoneyText + "(" + sourceMoney + ")" + "=" + targetMoney + "(" + targetMoneyText + ")");
+						$("#targetText").val(originalText + sourceMoneyText + "(" + sourceMoney + ")" + "=" + targetMoney  + targetMoneyText + "(" + targetMoneyVal + ")");
 					}
 				})
 			}else{
